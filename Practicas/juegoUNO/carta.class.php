@@ -23,7 +23,7 @@ class Carta
     public function pinta_carta_link()
     {
         echo '
-            <a href="index.php?' . $this->palo . '&' . $this->numero . '&' . $this->index . '">
+            <a href="index.php?palo=' . $this->palo . '&numero=' . $this->numero . '&index=' . $this->index . '">
                 <img src="./cartas_uno/' . $this->numero . '_' . $this->palo . '.png" alt="' . $this->numero . '_' . $this->palo . '">
             </a>
         ';

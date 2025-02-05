@@ -22,25 +22,25 @@
                 <h2>Selecciona el numero de jugadores y cartas</h2>
             </div>
 
-            <form method="POST" action="./partida.class.php">
+            <form method="POST" action="index.php">
                 <div class="d-flex justify-content-center">
-                    <select name="jugadores" class="form-select mx-1" aria-label="Numero de jugadores">
+                    <select name="jugadores" id="jugadores" class="form-select mx-1" aria-label="Numero de jugadores">
                         <option selected>Numero de jugadores</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
-                        <option value="4">5</option>
+                        <option value="5">5</option>
                     </select>
-                    <select name="cartas" class="form-select mx-1" aria-label="Numero de cartas">
+                    <select name="cartas" id="cartas" class="form-select mx-1" aria-label="Numero de cartas">
                         <option selected>Numero de cartas</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
-                        <option value="2">5</option>
-                        <option value="3">6</option>
-                        <option value="4">7</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
                     </select>
                 </div>
                 <div class="d-flex justify-content-end">
