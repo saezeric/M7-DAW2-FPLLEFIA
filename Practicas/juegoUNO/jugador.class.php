@@ -20,6 +20,7 @@ class Jugador
 
     public function eliminar_carta($carta)
     {
+        $carta = (int)$carta;
         if (isset($this->mano[$carta])) {
             unset($this->mano[$carta]);
             $this->mano = array_values($this->mano);

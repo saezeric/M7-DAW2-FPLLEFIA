@@ -49,8 +49,8 @@ class Partida
         $this->carta_en_mesa = array_shift($this->baraja->conjunto_cartas);
 
         // Si la carta en mesa al comenzar la partida es especial, se hace un bucle hasta que la carta que aparezca sea una carta normal
-        if ($this->carta_en_mesa->numero === "reverse" || $this->carta_en_mesa->numero === "skip" || $this->carta_en_mesa->numero === "picker") {
-            while ($this->carta_en_mesa->numero === "reverse" || $this->carta_en_mesa->numero === "skip" || $this->carta_en_mesa->numero === "picker") {
+        if ($this->carta_en_mesa->numero == "reverse" || $this->carta_en_mesa->numero == "skip" || $this->carta_en_mesa->numero == "picker") {
+            while ($this->carta_en_mesa->numero == "reverse" || $this->carta_en_mesa->numero == "skip" || $this->carta_en_mesa->numero == "picker") {
                 $this->carta_en_mesa = array_push($this->baraja->conjunto_cartas);
                 $this->carta_en_mesa = array_shift($this->baraja->conjunto_cartas);
             }
@@ -112,15 +112,17 @@ class Partida
     public function jugar()
     {
         $palo = $_GET['palo'];
-        // Se hace esto porque al hacer el get se detecta numero como un string y no como integer
         $numero = $_GET['numero'];
         $index = $_GET['index'];
         // Obtener el jugador actual
         $jugador_actual = $this->array_jugadores[$this->turno];
 
-        if ($palo === $this->carta_en_mesa->palo || $numero === $this->carta_en_mesa->numero) {
+        if ($palo == $this->carta_en_mesa->palo || $numero == $this->carta_en_mesa->numero) {
             $this->carta_en_mesa = new Carta($palo, $numero, $index);
             $this->normas_uno($numero);
+            var_dump($this->carta_en_mesa->index);
+            $jugador_actual->eliminar_carta($this->carta_en_mesa->index);
+            // Cambiar turno
             $this->cambiar_turno();
         }
 
@@ -128,9 +130,9 @@ class Partida
 
         $robar = $_GET['robar'];
 
-        if ($robar){
-        $carta = array_shift($this->baraja->conjunto_cartas);
-        $jugador_actual->afegir_carta($carta);
+        if ($robar) {
+            $carta = array_shift($this->baraja->conjunto_cartas);
+            $jugador_actual->afegir_carta($carta);
         }
 
         echo '
@@ -151,7 +153,7 @@ class Partida
            </div>';
 
         // Verificar si un jugador ha ganado
-        if (count($jugador_actual->mano) === 0) {
+        if (count($jugador_actual->mano) == 0) {
             echo "<h2>¡El jugador {$jugador_actual->id} ha ganado!</h2>";
             return;
         }

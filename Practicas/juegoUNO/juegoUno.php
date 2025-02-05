@@ -10,7 +10,8 @@ require_once("baraja.class.php");
 
 if (isset($_SESSION['partida'])) {
     //var_dump($_SESSION['partida']);
-    if ($_GET['palo'] && $_GET['numero'] && $_GET['index'] || $_GET['robar']){
+    if (isset($_GET['palo']) && isset($_GET['numero']) && isset($_GET['index']) || isset($_GET['robar'])) {
+        echo "Serializo ";
         $partida = $_SESSION['partida'];
         $_SESSION['partida'] = serialize($partida);
         $partida = $_SESSION['partida'];
@@ -18,22 +19,23 @@ if (isset($_SESSION['partida'])) {
     if ($partida === false) {
         die("Error al deserializar la partida.");
     }
+    echo "Unserializo";
     $partida = unserialize($_SESSION['partida']);
     $_SESSION['partida'] = $partida;
-}else{
+} else {
     if ($_SERVER['REQUEST_METHOD'] === "POST") {
         if (!isset($_POST['jugadores']) || !isset($_POST['cartas'])) {
             die("Error: Faltan datos del formulario.");
         }
-    
+
         $numero_jugadores = $_POST['jugadores'];
         $numero_cartas = $_POST['cartas'];
-    
+
         // Crear baraja y partida
         $baraja = new Baraja();
         $baraja->crea_baraja();
         $baraja->mezclar();
-    
+
         $partida = new Partida($numero_jugadores, $numero_cartas, $baraja);
         $_SESSION['partida'] = serialize($partida);
         $partida = $_SESSION['partida'];
@@ -67,7 +69,7 @@ if (isset($_SESSION['partida'])) {
                 <?php
                 if (is_object($partida) && method_exists($partida, 'jugar')) {
                     $partida->jugar();
-                }else{
+                } else {
                     die("Error con partidajugar");
                 }
                 ?>
