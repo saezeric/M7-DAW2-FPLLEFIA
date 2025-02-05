@@ -70,7 +70,8 @@ if (isset($_SESSION['partida'])) {
                 if (is_object($partida) && method_exists($partida, 'jugar')) {
                     $partida->jugar();
                 } else {
-                    die("Error con partidajugar");
+                    session_destroy();
+                    echo '<a class="btn btn-success my-5 p-3 container" href="index.php">Iniciar Partida</a>';
                 }
                 ?>
             </div>

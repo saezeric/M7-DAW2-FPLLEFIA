@@ -20,10 +20,23 @@ class Jugador
 
     public function eliminar_carta($carta)
     {
-        $carta = (int)$carta;
-        if (isset($this->mano[$carta])) {
-            unset($this->mano[$carta]);
-            $this->mano = array_values($this->mano);
+        //$carta = (int)$carta;
+        // var_dump($this->mano);
+        // if (isset($this->mano[$carta])) {
+        //     unset($this->mano[$carta]);
+        //     $this->mano = array_values($this->mano);
+        // }
+        var_dump($carta->palo);
+        var_dump($carta->numero);
+        var_dump($carta->index);
+        foreach ($this->mano as $key => $carta_in_mano) {
+            // Comparar las propiedades de las cartas
+            if ($carta_in_mano->palo == $carta->palo && $carta_in_mano->numero == $carta->numero && $carta_in_mano->index == $carta->index) {
+                // Si la carta coincide, la eliminamos
+                unset($this->mano[$key]);
+                $this->mano = array_values($this->mano);  // Reindexar el array después de eliminar
+                return;  // Salimos del método después de eliminar la carta
+            }
         }
     }
 

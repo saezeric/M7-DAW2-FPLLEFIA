@@ -15,12 +15,14 @@ class Partida
     public $array_jugadores;
     public $constante_sentido = 1;
 
-    public function __construct($numero_jugadores, $numero_cartas, $baraja)
+    public function __construct($numero_jugadores, $numero_cartas)
     {
         $this->numero_jugadores = $numero_jugadores;
         $this->numero_cartas = $numero_cartas;
         $this->turno = 0;
-        $this->baraja = $baraja;
+        $this->baraja = new Baraja();
+        $this->baraja->crea_baraja();
+        $this->baraja->mezclar();
         $this->array_jugadores = [];
         $this->constante_sentido = 1;
         $this->inicializar_jugadores();
@@ -120,14 +122,13 @@ class Partida
         if ($palo == $this->carta_en_mesa->palo || $numero == $this->carta_en_mesa->numero) {
             $this->carta_en_mesa = new Carta($palo, $numero, $index);
             $this->normas_uno($numero);
-            var_dump($this->carta_en_mesa->index);
-            $jugador_actual->eliminar_carta($this->carta_en_mesa->index);
+            //var_dump($this->carta_en_mesa);
+            $jugador_actual->eliminar_carta($this->carta_en_mesa);
             // Cambiar turno
             $this->cambiar_turno();
         }
 
         // Robar cartas
-
         $robar = $_GET['robar'];
 
         if ($robar) {
@@ -155,7 +156,14 @@ class Partida
         // Verificar si un jugador ha ganado
         if (count($jugador_actual->mano) == 0) {
             echo "<h2>¡El jugador {$jugador_actual->id} ha ganado!</h2>";
+            session_destroy();
             return;
+        }
+
+        if (count($this->baraja->conjunto_cartas) == 0) {
+            $this->baraja = new Baraja();
+            $this->baraja->crea_baraja();
+            $this->baraja->mezclar();
         }
     }
 }
