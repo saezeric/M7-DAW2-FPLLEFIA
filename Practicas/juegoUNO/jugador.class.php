@@ -14,6 +14,7 @@ class Jugador
 
     public function afegir_carta($carta)
     {
+        // array_push($this->mano[], $carta);
         $this->mano[] = $carta;
     }
 
