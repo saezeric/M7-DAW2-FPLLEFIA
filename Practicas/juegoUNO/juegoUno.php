@@ -11,7 +11,7 @@ require_once("baraja.class.php");
 if (isset($_SESSION['partida'])) {
     //var_dump($_SESSION['partida']);
     if (isset($_GET['palo']) && isset($_GET['numero']) && isset($_GET['index']) || isset($_GET['robar'])) {
-        echo "Serializo ";
+        //echo "Serializo ";
         $partida = $_SESSION['partida'];
         $_SESSION['partida'] = serialize($partida);
         $partida = $_SESSION['partida'];
@@ -19,7 +19,7 @@ if (isset($_SESSION['partida'])) {
     if ($partida === false) {
         die("Error al deserializar la partida.");
     }
-    echo "Unserializo";
+    //echo "Unserializo";
     $partida = unserialize($_SESSION['partida']);
     $_SESSION['partida'] = $partida;
 } else {
