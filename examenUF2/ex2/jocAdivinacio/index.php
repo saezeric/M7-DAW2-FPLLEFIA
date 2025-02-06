@@ -4,56 +4,40 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $_SESSION['numero'] = $_POST['numero'];
-    $joc = $_SESSION['jocAdivinacio'];
-    $_SESSION['jocAdivinacio'] = serialize($joc);
-    echo "He entrado en recibir metodo post";
 }
 
-if (!isset($_SESSION['numeroSecret']) && !isset($_SESSION['intents'])) {
-    $_SESSION['intents'] = 0;
-    $_SESSION['numeroSecret'] = rand(1, 20);
-    $intents = $_SESSION['intents'];
-    $numeroSecret = $_SESSION['intents'];
-
-    $_SESSION['jocAdivinacio'] = new jocAdivinacio($numeroSecret, $intents);
-
-    $joc = $_SESSION['jocAdivinacio'];
-    $_SESSION['jocAdivinacio'] = serialize($joc);
-    echo "He entrado en crear Sesion y serializarla";
-} else {
-    $joc = unserialize($_SESSION['jocAdivinacio']);
-    $_SESSION['jocAdivinacio'] = $joc;
-    echo "He entrado en unserializar sesion";
+if (!isset($_SESSION['jocAdivinacio'])) {
+    $_SESSION['jocAdivinacio'] = new JocAdivinacio();
 }
 
 
 
 
-class jocAdivinacio
+class JocAdivinacio
 {
     public $numeroAleatori;
     public $intents;
 
-    public function __construct($numeroSecret, $intents)
+    public function __construct()
     {
-        $this->numeroAleatori = $numeroSecret;
-        $this->intents = $intents;
+        $this->numeroAleatori = rand(1, 20);
+        $this->intents = 0;
     }
 
     public function comprovar($num)
     {
         if ($num < $this->numeroAleatori) {
-            echo "El numero que has de adivinar es mas grande";
+            echo "<br>El numero que has de adivinar es mas grande";
             $this->intents++;
         }
 
         if ($num > $this->numeroAleatori) {
-            echo "El numero que has de adivinar es mas pequeño";
+            echo "<br>El numero que has de adivinar es mas pequeño";
             $this->intents++;
         }
 
         if ($num == $this->numeroAleatori) {
-            echo "Has acertado el numero!! Enorabuena";
+            echo "<br>Has acertado el numero!! Enorabuena";
             $this->intents++;
             session_destroy();
         }
@@ -63,7 +47,7 @@ class jocAdivinacio
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
