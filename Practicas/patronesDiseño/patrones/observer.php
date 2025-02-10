@@ -85,9 +85,9 @@
     </a>
     
     <!-- Botón Siguiente -->
-    <a href="?patron=command"
+    <a href="?patron=strategy"
        class="w-full text-center bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
-        Command →
+        Strategy →
     </a>
 </div>
 </section>
