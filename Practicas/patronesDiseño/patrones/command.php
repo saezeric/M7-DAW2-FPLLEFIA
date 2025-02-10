@@ -1,6 +1,6 @@
 <div class="flex justify-between items-center mb-8">
     <h1 class="text-3xl font-bold">Command</h1>
-    <a href="../comportamiento.php" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+    <a href="comportamiento.php" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
         ← Volver
     </a>
 </div>
@@ -72,7 +72,7 @@
     </a>
     
     <!-- Botón Siguiente -->
-    <a href="../index.php"
+    <a href="index.php"
        class="w-full text-center bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
         Volver al Inicio →
     </a>

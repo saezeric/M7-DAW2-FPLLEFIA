@@ -54,7 +54,7 @@
 
     <!-- Botones de navegación -->
     <div class="flex justify-between gap-4 mt-12">
-        <a href="../estructurales.php" 
+        <a href="estructurales.php" 
         class="w-full text-center bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
             ← Patrones Estructurales
         </a>

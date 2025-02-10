@@ -1,7 +1,7 @@
     <!-- Título y navegación -->
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-3xl font-bold">Decorator</h1>
-        <a href="../estructurales.php" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+        <a href="estructurales.php" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
             ← Volver
         </a>
     </div>
@@ -66,7 +66,7 @@
             ← Composite
         </a>
         
-        <a href="../creacion.php"
+        <a href="creacion.php"
         class="w-full text-center bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
             Patrones de Creacion →
         </a>

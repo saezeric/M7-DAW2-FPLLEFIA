@@ -1,6 +1,6 @@
 <div class="flex justify-between items-center mb-8">
     <h1 class="text-3xl font-bold">Singleton</h1>
-    <a href="../creacion.php" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+    <a href="creacion.php" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
         ← Volver
     </a>
 </div>
@@ -58,7 +58,7 @@
 </div>
 
 <div class="flex justify-between gap-4 mt-12">
-    <a href="../creacion.php" 
+    <a href="creacion.php" 
        class="w-full text-center bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
         ← Patrones de Creación
     </a>
