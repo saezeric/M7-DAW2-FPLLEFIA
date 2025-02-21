@@ -4,10 +4,10 @@ include("./components/header.php");
 
 <!-- page-title -->
 <section class="page-title bg-cover" data-background="images/backgrounds/page-title.jpg">
-  <div class="container">
+  <div class="container-fluid w-75 d-flex justify-content-center">
     <div class="row">
       <div class="col-12 text-center">
-        <h1 class="display-1 text-white font-weight-bold font-primary">Contact Us</h1>
+        <h1 class="display-1 text-white font-weight-bold font-primary">Contacta con Nosotros</h1>
       </div>
     </div>
   </div>

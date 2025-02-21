@@ -4,10 +4,10 @@ include("./components/header.php");
 
 <!-- page-title -->
 <section class="page-title bg-cover" data-background="images/backgrounds/page-title.jpg">
-  <div class="container">
+  <div class="container-fluid w-75 d-flex justify-content-center">
     <div class="row">
       <div class="col-12 text-center">
-        <h1 class="display-1 text-white font-weight-bold font-primary">Our Services</h1>
+        <h1 class="display-1 text-white font-weight-bold font-primary">Cursos de Inteligencia Artificial</h1>
       </div>
     </div>
   </div>
@@ -165,7 +165,7 @@ include("./components/header.php");
       <div class="col-lg-8 offset-lg-1">
         <h2 class="text-gradient-primary">Let's Start With Us!</h2>
         <p class="h4 font-weight-bold text-white mb-4">Lorem ipsum dolor sit amet, magna habemus ius ad</p>
-        <a href="contact.html" class="btn btn-lg btn-primary">Let’s talk</a>
+        <a href="contact.php" class="btn btn-lg btn-primary">Let’s talk</a>
       </div>
     </div>
   </div>

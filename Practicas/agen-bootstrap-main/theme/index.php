@@ -1,5 +1,8 @@
 <?php
 include("./components/header.php");
+require_once("./config.php");
+$result = $mysqli->query("SELECT * FROM USERS ORDER BY id DESC");
+// print_r($result);
 ?>
 
 <!-- banner -->
@@ -8,7 +11,8 @@ include("./components/header.php");
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h1 class="display-1 text-white font-weight-bold font-primary">MySchool Academy</h1>
+        <h1 class="display-1 text-white font-weight-bold font-primary">MYAI</h1>
+        <h2 class="display-6 text-white font-weight-bold font-primary">La primera Academia Online Especializada en IA de España</h2>
       </div>
     </div>
   </div>
@@ -150,7 +154,7 @@ include("./components/header.php");
         <div class="card hover-shadow">
           <img src="images/team/member-1.jpg" alt="team-member" class="card-img-top">
           <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.html">Sara Adams</a></h4>
+            <h4><a class="text-dark" href="team-single.php">Sara Adams</a></h4>
             <i>Designer</i>
           </div>
         </div>
@@ -159,7 +163,7 @@ include("./components/header.php");
         <div class="card hover-shadow">
           <img src="images/team/member-2.jpg" alt="team-member" class="card-img-top">
           <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.html">Tom Bills</a></h4>
+            <h4><a class="text-dark" href="team-single.php">Tom Bills</a></h4>
             <i>Developer</i>
           </div>
         </div>
@@ -168,7 +172,7 @@ include("./components/header.php");
         <div class="card hover-shadow">
           <img src="images/team/member-3.jpg" alt="team-member" class="card-img-top">
           <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.html">Anna Walle</a></h4>
+            <h4><a class="text-dark" href="team-single.php">Anna Walle</a></h4>
             <i>Manager</i>
           </div>
         </div>
@@ -198,7 +202,7 @@ include("./components/header.php");
           incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
           aliquip ex ea commodo consequat.</p>
-        <a href="about.html" class="btn btn-primary">Read More</a>
+        <a href="about.php" class="btn btn-primary">Read More</a>
       </div>
       <div class="col-md-2 col-sm-4 col-4 text-right align-self-end">
         <a class="venobox" data-autoplay="true" data-vbtype="video"
@@ -278,7 +282,7 @@ include("./components/header.php");
       <div class="col-lg-8 offset-lg-1">
         <h2 class="text-gradient-primary">Let's Start With Us!</h2>
         <p class="h4 font-weight-bold text-white mb-4">Lorem ipsum dolor sit amet, magna habemus ius ad</p>
-        <a href="contact.html" class="btn btn-lg btn-primary">Let’s talk</a>
+        <a href="contact.php" class="btn btn-lg btn-primary">Let’s talk</a>
       </div>
     </div>
   </div>

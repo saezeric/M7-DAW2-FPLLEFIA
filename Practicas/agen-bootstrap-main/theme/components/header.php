@@ -11,7 +11,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>MySchool Academy</title>
+    <title>MYAI</title>
 
     <!-- mobile responsive meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,30 +55,33 @@
             <div class="collapse navbar-collapse text-center" id="navigation">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php">Home</a>
+                        <a class="nav-link" href="index.php">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.php">About</a>
+                        <a class="nav-link" href="about.php">Sobre Nosotros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="services.php">Services</a>
+                        <a class="nav-link" href="services.php">Cursos 1</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="blog.php">Blog</a>
+                        <a class="nav-link" href="blog.php">Notícias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="works.php">Portfolio</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cursos 2</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="team.php">Team</a>
-                            <a class="dropdown-item" href="team-single.php">Team Details</a>
-                            <a class="dropdown-item" href="career.php">Career</a>
-                            <a class="dropdown-item" href="blog-single.php">Blog Details</a>
-                            <a class="dropdown-item" href="pricing.php">Pricing</a></a>
+                            <a class="dropdown-item" href="team.php">Profesores</a>
+                            <a class="dropdown-item" href="team-single.php">Profesores 1</a>
+                            <a class="dropdown-item" href="career.php">Cursos 3</a>
+                            <a class="dropdown-item" href="blog-single.php">Pagina de Notícia</a>
+                            <a class="dropdown-item" href="pricing.php">Cursos 4</a>
                             <a class="dropdown-item" href="faqs.php">FAQ's</a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contact</a>
+                        <a class="nav-link" href="contact.php">Contacto</a>
                     </li>
                 </ul>
             </div>
