@@ -1,6 +1,5 @@
 <?php
 include("./components/header.php");
-require_once("./config.php");
 $result = $mysqli->query("SELECT * FROM USERS ORDER BY id DESC");
 // print_r($result);
 ?>

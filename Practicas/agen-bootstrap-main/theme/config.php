@@ -8,6 +8,4 @@ $mysqli = new mysqli($host, $username, $password, $dbname);
 
 if ($mysqli->connect_error) {
     die("Error de conexion: " . $mysqli->connect_error);
-} else {
-    echo "CONEXION EXITOSA";
 }
