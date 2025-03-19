@@ -15,94 +15,54 @@ include("./components/header.php");
 <!-- /page-title -->
 
 <!-- team -->
-<section class="section pb-0">
+<section class="section">
   <div class="container">
+    <div class="row">
+      <div class="col-lg-10 mx-auto text-center">
+        <h2>Un equipo dispuesto a hacerte aprender</h2>
+        <p>Nuestros profesores especializados en el sector de la inteligencia artificial te acompañaran en cada paso.</p>
+        <div class="section-border"></div>
+      </div>
+    </div>
     <div class="row no-gutters">
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-1.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Sara Adams</a></h4>
-            <i>Designer</i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-2.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Tom Bills</a></h4>
-            <i>Developer</i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-3.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Anna Walle</a></h4>
-            <i>Manager</i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-4.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Devid Json</a></h4>
-            <i>CEO</i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-1.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Sara Adams</a></h4>
-            <i>Designer</i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-2.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Tom Bills</a></h4>
-            <i>Developer</i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-3.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Anna Walle</a></h4>
-            <i>Manager</i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-4.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Devid Json</a></h4>
-            <i>CEO</i>
-          </div>
-        </div>
-      </div>
+      <?php
+      // Consulta SQL para obtener los usuarios con rol "profesor"
+      $professors_query = "SELECT id, name, surname, avatar FROM USERS WHERE rol = 'profesor'";
+      $result = $mysqli->query($professors_query);
+
+      if ($result && $result->num_rows > 0) {
+        while ($professor = $result->fetch_assoc()) {
+          echo '
+              <div class="col-lg-3 col-sm-6">
+                <div class="card hover-shadow">
+                  <img src="' . $professor['avatar'] . '" 
+                       alt="' . $professor['name'] . ' ' . $professor['surname'] . '" 
+                       class="card-img-top"
+                       style="object-fit: cover; height: 400px">
+                  <div class="card-body text-center position-relative zindex-1">
+                    <h4><a class="text-dark" href="team-single.php?id=' . $professor['id'] . '">'
+            . $professor['name'] . ' ' . $professor['surname'] . '</a></h4>
+                  </div>
+                </div>
+              </div>';
+        }
+      } else {
+        echo '<div class="col-12 text-center"><p>No hay profesores disponibles en este momento.</p></div>';
+      }
+      ?>
     </div>
   </div>
 </section>
 <!-- /team -->
 
 <!-- call to action -->
-<section class="section pb-0">
+<section class="mb-5">
   <div class="container section-sm overlay-secondary-half bg-cover" data-background="images/backgrounds/cta-bg.jpg">
     <div class="row">
       <div class="col-lg-8 offset-lg-1">
-        <h2 class="text-gradient-primary">Let's Start With Us!</h2>
-        <p class="h4 font-weight-bold text-white mb-4">Lorem ipsum dolor sit amet, magna habemus ius ad</p>
-        <a href="contact.php" class="btn btn-lg btn-primary">Let’s talk</a>
+        <h2 class="text-gradient-primary">Estamos contigo</h2>
+        <p class="h4 font-weight-bold text-white mb-4">Contacta con nosotros para obtener cualquier tipo de información</p>
+        <a href="contact.php" class="btn btn-lg btn-primary">Contactar</a>
       </div>
     </div>
   </div>

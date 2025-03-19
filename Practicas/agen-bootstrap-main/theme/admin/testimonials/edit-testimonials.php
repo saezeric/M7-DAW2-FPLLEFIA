@@ -1,3 +1,4 @@
+<!-- Recuerda que este codigo debe de ir adaptado tambien a edit-user -->
 <?php
 require_once '../../config.php';
 

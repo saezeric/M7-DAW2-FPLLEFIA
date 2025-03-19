@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("./config.php");
+require_once("config.php");
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +53,7 @@ require_once("./config.php");
 
             <div class="collapse navbar-collapse text-center" id="navigation">
                 <ul class="navbar-nav ml-auto align-items-center">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="index.php">Inicio</a>
                     </li>
                     <li class="nav-item">
@@ -89,11 +89,11 @@ require_once("./config.php");
                             <!-- La imagen de perfil actuará como disparador del dropdown -->
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="imagen-perfil" src="<?= htmlspecialchars($_SESSION['user_avatar']) ?>"
-                                    alt="Avatar del usuario" style="width:40px; border-radius:50%;">
+                                <img class="imagen-perfil" src="<?= $_SESSION['user_avatar'] ?>"
+                                    alt="Avatar del usuario" style="width:75px; height: 75px; border-radius:100%; object-fit: cover;">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <h6 class="dropdown-header">Hola, <?= htmlspecialchars($_SESSION['user_name']) ?></h6>
+                                <h6 class="dropdown-header">Hola, <?= $_SESSION['user_name'] ?></h6>
                                 <?php if ($_SESSION['user_rol'] === 'admin'): ?>
                                     <a class="dropdown-item" href="admin.php">Panel de Administración</a>
                                 <?php endif; ?>

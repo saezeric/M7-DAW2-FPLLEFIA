@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $avatar = $_POST['avatar'];
+    $age = $_POST['age'];
 
     // 2. CIFRAR LA PASSWORD CON PASSWORD HASH
     $passwordHashed = password_hash($password, PASSWORD_DEFAULT);

@@ -1,7 +1,10 @@
 <?php
 include("./components/header.php");
 $result = $mysqli->query("SELECT * FROM USERS ORDER BY id DESC");
-// print_r($result);
+
+// Obtener las tres últimas noticias
+$news_query = "SELECT * FROM NEWS ORDER BY new_date DESC LIMIT 3";
+$news_result = $mysqli->query($news_query);
 ?>
 
 <!-- banner -->
@@ -18,12 +21,76 @@ $result = $mysqli->query("SELECT * FROM USERS ORDER BY id DESC");
 </section>
 <!-- /banner -->
 
+<!-- project -->
+<section id="portfolio" class="section">
+  <div class="container-fluid px-0">
+    <div class="row">
+      <div class="col-lg-10 mx-auto text-center">
+        <h2>Nuestros Cursos</h2>
+        <div class="section-border"></div>
+      </div>
+    </div>
+
+    <div class="row no-gutters shuffle-wrapper">
+      <?php
+      // Definimos la consulta SQL
+      $courses_query = "SELECT id, title, url, image FROM COURSES";
+
+      // Ejecutamos la consulta usando MySQLi
+      $result = $mysqli->query($courses_query);
+
+      // Verificamos si hay resultados
+      if ($result && $result->num_rows > 0) {
+        // Recorremos cada curso
+        while ($course = $result->fetch_assoc()) {
+          echo '
+              <div class="col-lg-4 col-md-6 shuffle-item">
+                <div class="project-item">
+                  <img src="' . $course['image'] . '" 
+                       alt="' . $course['title'] . '" 
+                       class="img-fluid w-100"
+                        style="height: 300px; object-fit: cover;">
+                  <div class="project-hover bg-secondary px-4 py-3">
+                    <a href="' . $course['url'] . '" 
+                       class="text-white h4">' . $course['title'] . '</a>
+                    <a href="' . $course['url'] . '">
+                      <i class="ti-link icon-xs text-white"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>';
+        }
+      } else {
+        echo '<div class="col-12 text-center py-5">
+                  <p class="text-muted">Próximamente nuevos cursos</p>
+                </div>';
+      }
+      ?>
+    </div>
+  </div>
+</section>
+<!-- /project -->
+
+<!-- call to action -->
+<section>
+  <div class="container section-sm overlay-secondary-half bg-cover" data-background="https://images.pexels.com/photos/313690/pexels-photo-313690.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-1">
+        <h2 class="text-gradient-primary">Comienza tu Curso Ahora!</h2>
+        <p class="h4 font-weight-bold text-white mb-4">Investiga mas acerca de nuestros cursos de IA</p>
+        <a href="works.php" class="btn btn-lg btn-primary">Ver más</a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /call to action -->
+
 <!-- service -->
 <section class="section">
   <div class="container">
     <div class="row">
       <div class="col-lg-10 mx-auto text-center">
-        <h2 class="section-title">Nuestros Servicios</h2>
+        <h2 class="section-title">Cards</h2>
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
           labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
           aliquip ex ea commodo consequat.</p>
@@ -75,116 +142,42 @@ $result = $mysqli->query("SELECT * FROM USERS ORDER BY id DESC");
 </section>
 <!-- /service -->
 
-<!-- feature -->
-<section class="section bg-secondary position-relative">
-  <div class="bg-image overlay-secondary">
-    <img src="images/feature.jpg" alt="bg-image">
-  </div>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xl-9 mx-auto">
-        <div class="row align-items-center">
-          <div class="col-lg-4 mb-4 mb-lg-0">
-            <img src="images/feature.jpg" alt="feature-image" class="img-fluid">
-          </div>
-          <div class="col-lg-7 offset-lg-1">
-            <div class="row">
-              <div class="col-12">
-                <h2 class="text-white">We know What Bait to Use</h2>
-                <div class="section-border ml-0"></div>
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="media">
-                  <i class="icon text-gradient-primary ti-vector mr-3"></i>
-                  <div class="media-body">
-                    <h4 class="text-white">User Experience</h4>
-                    <p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="media">
-                  <i class="icon text-gradient-primary ti-layout mr-3"></i>
-                  <div class="media-body">
-                    <h4 class="text-white">Responsive Layout</h4>
-                    <p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="media">
-                  <i class="icon text-gradient-primary ti-headphone-alt mr-3"></i>
-                  <div class="media-body">
-                    <h4 class="text-white">Digital Solutions</h4>
-                    <p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="media">
-                  <i class="icon text-gradient-primary ti-ruler-pencil mr-3"></i>
-                  <div class="media-body">
-                    <h4 class="text-white">Bootstrap 4x</h4>
-                    <p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /feature -->
-
 <!-- team -->
 <section class="section">
   <div class="container">
     <div class="row">
       <div class="col-lg-10 mx-auto text-center">
-        <h2>Our Team</h2>
+        <h2>Nuestros Profesores</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</p>
         <div class="section-border"></div>
       </div>
     </div>
     <div class="row no-gutters">
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-1.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Sara Adams</a></h4>
-            <i>Designer</i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-2.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Tom Bills</a></h4>
-            <i>Developer</i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-3.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center position-relative zindex-1">
-            <h4><a class="text-dark" href="team-single.php">Anna Walle</a></h4>
-            <i>Manager</i>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-6">
-        <div class="card hover-shadow">
-          <img src="images/team/member-4.jpg" alt="team-member" class="card-img-top">
-          <div class="card-body text-center">
-            <h4>Devid Json</h4>
-            <i>CEO</i>
-          </div>
-        </div>
-      </div>
+      <?php
+      // Consulta SQL para obtener los usuarios con rol "profesor"
+      $professors_query = "SELECT id, name, surname, avatar FROM USERS WHERE rol = 'profesor'";
+      $result = $mysqli->query($professors_query);
+
+      if ($result && $result->num_rows > 0) {
+        while ($professor = $result->fetch_assoc()) {
+          echo '
+              <div class="col-lg-3 col-sm-6">
+                <div class="card hover-shadow">
+                  <img src="' . $professor['avatar'] . '" 
+                       alt="' . $professor['name'] . ' ' . $professor['surname'] . '" 
+                       class="card-img-top"
+                       style="object-fit: cover; height: 400px">
+                  <div class="card-body text-center position-relative zindex-1">
+                    <h4><a class="text-dark" href="team-single.php?id=' . $professor['id'] . '">'
+            . $professor['name'] . ' ' . $professor['surname'] . '</a></h4>
+                  </div>
+                </div>
+              </div>';
+        }
+      } else {
+        echo '<div class="col-12 text-center"><p>No hay profesores disponibles en este momento.</p></div>';
+      }
+      ?>
     </div>
   </div>
 </section>
@@ -196,12 +189,9 @@ $result = $mysqli->query("SELECT * FROM USERS ORDER BY id DESC");
   <div class="container">
     <div class="row justify-content-between">
       <div class="col-lg-6 col-md-8 col-sm-7 col-8">
-        <h2 class="text-white mb-4">Who We Are</h2>
-        <p class="text-light mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.</p>
-        <a href="about.php" class="btn btn-primary">Read More</a>
+        <h2 class="text-white mb-4">¿Quienes Somos?</h2>
+        <p class="text-light mb-4" style="width: 75%">En MyAI, somos pioneros en la revolución educativa de la inteligencia artificial en España. Como la primera empresa especializada en cursos de IA, nuestro compromiso es liderar la formación en una de las tecnologías más transformadoras de nuestro tiempo.</p>
+        <a href="about.php" class="btn btn-primary">Leer más</a>
       </div>
       <div class="col-md-2 col-sm-4 col-4 text-right align-self-end">
         <a class="venobox" data-autoplay="true" data-vbtype="video"
@@ -212,81 +202,6 @@ $result = $mysqli->query("SELECT * FROM USERS ORDER BY id DESC");
   </div>
 </section>
 <!-- /about -->
-
-<!-- project -->
-<section id="portfolio" class="section">
-  <div class="container-fluid px-0">
-    <div class="row">
-      <div class="col-lg-10 mx-auto text-center">
-        <h2>Our Feature Works</h2>
-        <div class="section-border"></div>
-      </div>
-    </div>
-
-    <div class="row no-gutters shuffle-wrapper">
-      <div class="col-lg-4 col-md-6 shuffle-item">
-        <div class="project-item">
-          <img src="images/project/project-1.jpg" alt="project-image" class="img-fluid w-100">
-          <div class="project-hover bg-secondary px-4 py-3">
-            <a href="#" class="text-white h4">Project title</a>
-            <a href="#"><i class="ti-link icon-xs text-white"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 shuffle-item">
-        <div class="project-item">
-          <img src="images/project/project-2.jpg" alt="project-image" class="img-fluid w-100">
-          <div class="project-hover bg-secondary px-4 py-3">
-            <a href="#" class="text-white h4">Project title</a>
-            <a href="#"><i class="ti-link icon-xs text-white"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 shuffle-item">
-        <div class="project-item">
-          <img src="images/project/project-3.jpg" alt="project-image" class="img-fluid w-100">
-          <div class="project-hover bg-secondary px-4 py-3">
-            <a href="#" class="text-white h4">Project title</a>
-            <a href="#"><i class="ti-link icon-xs text-white"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 shuffle-item">
-        <div class="project-item">
-          <img src="images/project/project-4.jpg" alt="project-image" class="img-fluid w-100">
-          <div class="project-hover bg-secondary px-4 py-3">
-            <a href="#" class="text-white h4">Project title</a>
-            <a href="#"><i class="ti-link icon-xs text-white"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 shuffle-item">
-        <div class="project-item">
-          <img src="images/project/project-5.jpg" alt="project-image" class="img-fluid w-100">
-          <div class="project-hover bg-secondary px-4 py-3">
-            <a href="#" class="text-white h4">Project title</a>
-            <a href="#"><i class="ti-link icon-xs text-white"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /project -->
-
-<!-- call to action -->
-<section>
-  <div class="container section-sm overlay-secondary-half bg-cover" data-background="images/backgrounds/cta-bg.jpg">
-    <div class="row">
-      <div class="col-lg-8 offset-lg-1">
-        <h2 class="text-gradient-primary">Let's Start With Us!</h2>
-        <p class="h4 font-weight-bold text-white mb-4">Lorem ipsum dolor sit amet, magna habemus ius ad</p>
-        <a href="contact.php" class="btn btn-lg btn-primary">Let’s talk</a>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /call to action -->
 
 <!-- pricing -->
 <section class="section pb-0">
@@ -357,53 +272,48 @@ $result = $mysqli->query("SELECT * FROM USERS ORDER BY id DESC");
 </section>
 <!-- /pricing -->
 
-<!-- blog -->
+<!-- latest news -->
 <section class="section">
   <div class="container">
     <div class="row">
       <div class="col-lg-10 mx-auto text-center">
-        <h2>Latest News</h2>
+        <h2>Últimas Noticias</h2>
         <div class="section-border"></div>
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-        <article class="card">
-          <img src="images/blog/post-1.jpg" alt="post-thumb" class="card-img-top mb-2">
-          <div class="card-body p-0">
-            <time>January 15, 2018</time>
-            <a href="blog-single" class="h4 card-title d-block my-3 text-dark hover-text-underline">How These Different
-              Book Covers Reflect the Design</a>
-            <a href="#" class="btn btn-transparent">Read more</a>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-        <article class="card">
-          <img src="images/blog/post-2.jpg" alt="post-thumb" class="card-img-top mb-2">
-          <div class="card-body p-0">
-            <time>January 15, 2018</time>
-            <a href="blog-single" class="h4 card-title d-block my-3 text-dark hover-text-underline">How These Different
-              Book Covers Reflect the Design</a>
-            <a href="#" class="btn btn-transparent">Read more</a>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-        <article class="card">
-          <img src="images/blog/post-3.jpg" alt="post-thumb" class="card-img-top mb-2">
-          <div class="card-body p-0">
-            <time>January 15, 2018</time>
-            <a href="blog-single" class="h4 card-title d-block my-3 text-dark hover-text-underline">How These Different
-              Book Covers Reflect the Design</a>
-            <a href="#" class="btn btn-transparent">Read more</a>
-          </div>
-        </article>
+      <?php while ($news = $news_result->fetch_assoc()): ?>
+        <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+          <article class="card h-100">
+            <img src="<?= $news['image'] ?>" alt="post-thumb" class="card-img-top mb-2 img-fixed">
+            <div class="card-body d-flex flex-column">
+              <time><?= date("F j, Y", strtotime($news['new_date'])) ?></time>
+              <a href="blog-single.php?id=<?= $news['id'] ?>" class="h4 card-title d-block my-3 text-dark hover-text-underline">
+                <?= $news['title'] ?>
+              </a>
+              <a href="blog-single.php?id=<?= $news['id'] ?>" class="btn btn-transparent mt-auto">Leer más</a>
+            </div>
+          </article>
+        </div>
+      <?php endwhile; ?>
+    </div>
+  </div>
+</section>
+<!-- /latest news -->
+
+<!-- call to action -->
+<section class="mb-5">
+  <div class="container section-sm overlay-secondary-half bg-cover" data-background="images/backgrounds/cta-bg.jpg">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-1">
+        <h2 class="text-gradient-primary">Estamos contigo</h2>
+        <p class="h4 font-weight-bold text-white mb-4">Contacta con nosotros para obtener cualquier tipo de información</p>
+        <a href="contact.php" class="btn btn-lg btn-primary">Contactar</a>
       </div>
     </div>
   </div>
 </section>
-<!-- /blog -->
+<!-- /call to action -->
 
 <?php
 
