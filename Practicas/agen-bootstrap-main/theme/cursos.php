@@ -7,7 +7,7 @@ include("./components/header.php");
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h1 class="display-1 text-white font-weight-bold font-primary">Portfolio</h1>
+        <h1 class="display-1 text-white font-weight-bold font-primary">Nuestros Cursos</h1>
       </div>
     </div>
   </div>
@@ -44,9 +44,9 @@ include("./components/header.php");
                        class="img-fluid w-100"
                         style="height: 300px; object-fit: cover;">
                   <div class="project-hover bg-secondary px-4 py-3">
-                    <a href="' . $course['url'] . '" 
+                    <a href="curso.php?url=' . $course['url'] . '" 
                        class="text-white h4">' . $course['title'] . '</a>
-                    <a href="' . $course['url'] . '">
+                    <a href="curso.php?url=' . $course['url'] . '">
                       <i class="ti-link icon-xs text-white"></i>
                     </a>
                   </div>

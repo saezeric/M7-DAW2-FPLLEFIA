@@ -59,14 +59,32 @@ require_once("config.php");
                     <li class="nav-item">
                         <a class="nav-link" href="about.php">Sobre Nosotros</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="services.php">Cursos 1</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cursos</a>
+                        <div class="dropdown-menu">
+                            <?php
+                            // Consulta SQL para obtener todos los cursos
+                            $courses_query = "SELECT id, title, url FROM COURSES";
+                            $result = $mysqli->query($courses_query);
+
+                            // Verificar si hay resultados
+                            if ($result && $result->num_rows > 0) {
+                                // Recorrer cada curso y generar un enlace en el dropdown
+                                while ($course = $result->fetch_assoc()) {
+                                    echo '<a class="dropdown-item" href="curso.php?url=' . $course['url'] . '">' . $course['title'] . '</a>';
+                                }
+                            } else {
+                                // Si no hay cursos, mostrar un mensaje
+                                echo '<a class="dropdown-item" href="#">No hay cursos disponibles</a>';
+                            }
+                            ?>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="blog.php">Notícias</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="works.php">Portfolio</a>
+                        <a class="nav-link" href="contact.php">Contacto</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
@@ -79,9 +97,6 @@ require_once("config.php");
                             <a class="dropdown-item" href="pricing.php">Cursos 4</a>
                             <a class="dropdown-item" href="faqs.php">FAQ's</a>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contacto</a>
                     </li>
 
                     <?php if (isset($_SESSION['user_id'])): ?>

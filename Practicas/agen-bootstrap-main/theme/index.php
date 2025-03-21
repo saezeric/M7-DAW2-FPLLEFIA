@@ -21,6 +21,23 @@ $news_result = $mysqli->query($news_query);
 </section>
 <!-- /banner -->
 
+<!-- about -->
+<section class="section-lg position-relative bg-cover" data-background="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+  <img src="images/backgrounds/about-bg-overlay.png" alt="overlay" class="overlay-image img-fluid">
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-lg-6 col-md-8 col-sm-7 col-8">
+        <h2 class="text-white mb-4">¿Quienes Somos?</h2>
+        <p class="text-light mb-4" style="width: 75%">En MyAI, somos pioneros en la revolución educativa de la inteligencia artificial en España. Como la primera empresa especializada en cursos de IA, nuestro compromiso es liderar la formación en una de las tecnologías más transformadoras de nuestro tiempo.</p>
+        <a href="about.php" class="btn btn-primary">Leer más</a>
+      </div>
+      <div class="col-md-2 col-sm-4 col-4 text-right align-self-end">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /about -->
+
 <!-- project -->
 <section id="portfolio" class="section">
   <div class="container-fluid px-0">
@@ -51,9 +68,9 @@ $news_result = $mysqli->query($news_query);
                        class="img-fluid w-100"
                         style="height: 300px; object-fit: cover;">
                   <div class="project-hover bg-secondary px-4 py-3">
-                    <a href="' . $course['url'] . '" 
+                    <a href="curso.php?url=' . $course['url'] . '" 
                        class="text-white h4">' . $course['title'] . '</a>
-                    <a href="' . $course['url'] . '">
+                    <a href="curso.php?url=' . $course['url'] . '">
                       <i class="ti-link icon-xs text-white"></i>
                     </a>
                   </div>
@@ -72,75 +89,18 @@ $news_result = $mysqli->query($news_query);
 <!-- /project -->
 
 <!-- call to action -->
-<section>
+<section class="section">
   <div class="container section-sm overlay-secondary-half bg-cover" data-background="https://images.pexels.com/photos/313690/pexels-photo-313690.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
     <div class="row">
       <div class="col-lg-8 offset-lg-1">
         <h2 class="text-gradient-primary">Comienza tu Curso Ahora!</h2>
         <p class="h4 font-weight-bold text-white mb-4">Investiga mas acerca de nuestros cursos de IA</p>
-        <a href="works.php" class="btn btn-lg btn-primary">Ver más</a>
+        <a href="cursos.php" class="btn btn-lg btn-primary">Ver más</a>
       </div>
     </div>
   </div>
 </section>
 <!-- /call to action -->
-
-<!-- service -->
-<section class="section">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-10 mx-auto text-center">
-        <h2 class="section-title">Cards</h2>
-        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.</p>
-        <div class="section-border"></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 mb-4 mb-lg-0">
-        <div class="card hover-bg-secondary shadow py-4 active">
-          <div class="card-body text-center">
-            <div class="position-relative">
-              <i
-                class="icon-lg icon-box bg-gradient-primary rounded-circle ti-palette mb-5 d-inline-block text-white"></i>
-              <i class="icon-lg icon-watermark text-white ti-palette"></i>
-            </div>
-            <h4 class="mb-4">Design</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 mb-4 mb-lg-0">
-        <div class="card hover-bg-secondary shadow py-4">
-          <div class="card-body text-center">
-            <div class="position-relative">
-              <i
-                class="icon-lg icon-box bg-gradient-primary rounded-circle ti-dashboard mb-5 d-inline-block text-white"></i>
-              <i class="icon-lg icon-watermark text-white ti-dashboard"></i>
-            </div>
-            <h4 class="mb-4">Development</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 mb-4 mb-lg-0">
-        <div class="card hover-bg-secondary shadow py-4">
-          <div class="card-body text-center">
-            <div class="position-relative">
-              <i
-                class="icon-lg icon-box bg-gradient-primary rounded-circle ti-announcement mb-5 d-inline-block text-white"></i>
-              <i class="icon-lg icon-watermark text-white ti-announcement"></i>
-            </div>
-            <h4 class="mb-4">Marketing</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /service -->
 
 <!-- team -->
 <section class="section">
@@ -148,7 +108,7 @@ $news_result = $mysqli->query($news_query);
     <div class="row">
       <div class="col-lg-10 mx-auto text-center">
         <h2>Nuestros Profesores</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</p>
+        <p>Un equipo de trabajo preparado para sacar lo mejor de cada alumno</p>
         <div class="section-border"></div>
       </div>
     </div>
@@ -163,10 +123,12 @@ $news_result = $mysqli->query($news_query);
           echo '
               <div class="col-lg-3 col-sm-6">
                 <div class="card hover-shadow">
-                  <img src="' . $professor['avatar'] . '" 
-                       alt="' . $professor['name'] . ' ' . $professor['surname'] . '" 
-                       class="card-img-top"
-                       style="object-fit: cover; height: 400px">
+                  <a href="team-single.php?id=' . $professor['id'] . '">
+                    <img src="' . $professor['avatar'] . '" 
+                         alt="' . $professor['name'] . ' ' . $professor['surname'] . '" 
+                         class="card-img-top"
+                         style="object-fit: cover; height: 400px">
+                  </a>
                   <div class="card-body text-center position-relative zindex-1">
                     <h4><a class="text-dark" href="team-single.php?id=' . $professor['id'] . '">'
             . $professor['name'] . ' ' . $professor['surname'] . '</a></h4>
@@ -183,94 +145,48 @@ $news_result = $mysqli->query($news_query);
 </section>
 <!-- /team -->
 
-<!-- about -->
-<section class="section-lg position-relative bg-cover" data-background="images/backgrounds/about-bg.jpg">
-  <img src="images/backgrounds/about-bg-overlay.png" alt="overlay" class="overlay-image img-fluid">
+<!-- testimonial-slider -->
+<section class="section bg-secondary">
   <div class="container">
-    <div class="row justify-content-between">
-      <div class="col-lg-6 col-md-8 col-sm-7 col-8">
-        <h2 class="text-white mb-4">¿Quienes Somos?</h2>
-        <p class="text-light mb-4" style="width: 75%">En MyAI, somos pioneros en la revolución educativa de la inteligencia artificial en España. Como la primera empresa especializada en cursos de IA, nuestro compromiso es liderar la formación en una de las tecnologías más transformadoras de nuestro tiempo.</p>
-        <a href="about.php" class="btn btn-primary">Leer más</a>
-      </div>
-      <div class="col-md-2 col-sm-4 col-4 text-right align-self-end">
-        <a class="venobox" data-autoplay="true" data-vbtype="video"
-          href="https://www.youtube.com/watch?v=jrkvirglgaQ"><i
-            class="text-center icon-sm icon-box rounded-circle text-white bg-gradient-primary d-block ti-control-play"></i></a>
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="text-white mb-5">Nuestros Testimonios</h2>
       </div>
     </div>
-  </div>
-</section>
-<!-- /about -->
+    <div class="row bg-contain" data-background="images/banner/brush.png">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div id="slider" class="ui-card-slider bg-contain">
+          <?php
+          // Consulta SQL para obtener los testimonios
+          $testimonials_query = "SELECT * FROM TESTIMONIALS";
+          $result = $mysqli->query($testimonials_query);
 
-<!-- pricing -->
-<section class="section pb-0">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-10 mx-auto text-center">
-        <h2>Our Smart Pricing Table</h2>
-        <div class="section-border"></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-        <div class="card bottom-shape bg-secondary pt-4 pb-5">
-          <div class="card-body text-center">
-            <h4 class="text-white">Basic</h4>
-            <p class="text-light mb-4">Besic and simple website</p>
-            <p class="text-white mb-4">$ <span class="display-3 font-weight-bold vertical-align-middle">30</span></p>
-            <ul class="list-unstyled mb-5">
-              <li class="text-white mb-3">Mobile-Optimized Website</li>
-              <li class="text-white mb-3">Powerful Website Metrics</li>
-              <li class="text-white mb-3">Free Custom Domain</li>
-              <li class="text-white mb-3">24/7 Customer Support</li>
-              <li class="text-white mb-3">Fully Integrated E-Cormmerce</li>
-              <li class="text-white mb-3">Sell unlimited Product</li>
-            </ul>
-            <a href="#" class="btn btn-outline-light">Try it now</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-        <div class="card bottom-shape bg-secondary pt-4 pb-5">
-          <div class="card-body text-center">
-            <h4 class="text-white">Basic</h4>
-            <p class="text-light mb-4">Besic and simple website</p>
-            <p class="text-white mb-4">$ <span class="display-3 font-weight-bold vertical-align-middle">30</span></p>
-            <ul class="list-unstyled mb-5">
-              <li class="text-white mb-3">Mobile-Optimized Website</li>
-              <li class="text-white mb-3">Powerful Website Metrics</li>
-              <li class="text-white mb-3">Free Custom Domain</li>
-              <li class="text-white mb-3">24/7 Customer Support</li>
-              <li class="text-white mb-3">Fully Integrated E-Cormmerce</li>
-              <li class="text-white mb-3">Sell unlimited Product</li>
-            </ul>
-            <a href="#" class="btn btn-outline-light">Try it now</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-        <div class="card bottom-shape bg-secondary pt-4 pb-5">
-          <div class="card-body text-center">
-            <h4 class="text-white">Basic</h4>
-            <p class="text-light mb-4">Besic and simple website</p>
-            <p class="text-white mb-4">$ <span class="display-3 font-weight-bold vertical-align-middle">30</span></p>
-            <ul class="list-unstyled mb-5">
-              <li class="text-white mb-3">Mobile-Optimized Website</li>
-              <li class="text-white mb-3">Powerful Website Metrics</li>
-              <li class="text-white mb-3">Free Custom Domain</li>
-              <li class="text-white mb-3">24/7 Customer Support</li>
-              <li class="text-white mb-3">Fully Integrated E-Cormmerce</li>
-              <li class="text-white mb-3">Sell unlimited Product</li>
-            </ul>
-            <a href="#" class="btn btn-outline-light">Try it now</a>
-          </div>
+          if ($result && $result->num_rows > 0) {
+            while ($testimonial = $result->fetch_assoc()) {
+              echo '
+              <div class="slide">
+                <div class="card text-center">
+                  <div class="card-body px-5 py-4">
+                    <img src="' . $testimonial['image'] . '" 
+                         alt="' . $testimonial['name'] . ' ' . $testimonial['surname'] . '" 
+                         class="img-fluid rounded-circle mb-4"
+                         style="width: 100px; height: 100px; object-fit:cover;">
+                    <h4 class="text-secondary">' . $testimonial['name'] . ' ' . $testimonial['surname'] . '</h4>
+                    <p>“' . $testimonial['description'] . '”</p>
+                  </div>
+                </div>
+              </div>';
+            }
+          } else {
+            echo '<div class="col-12 text-center"><p>No hay testimonios disponibles en este momento.</p></div>';
+          }
+          ?>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- /pricing -->
+<!-- /testimonial-slider -->
 
 <!-- latest news -->
 <section class="section">
@@ -302,7 +218,7 @@ $news_result = $mysqli->query($news_query);
 <!-- /latest news -->
 
 <!-- call to action -->
-<section class="mb-5">
+<section class="section">
   <div class="container section-sm overlay-secondary-half bg-cover" data-background="images/backgrounds/cta-bg.jpg">
     <div class="row">
       <div class="col-lg-8 offset-lg-1">
