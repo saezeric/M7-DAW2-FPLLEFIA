@@ -169,11 +169,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (in_array($fileExtension, $allowedExtensions)) {
                     // Definir carpeta destino según la tabla; usar rutas relativas a la carpeta admin
                     switch ($table) {
-                        case 'USERS': $uploadDir = '../uploads/avatars/'; break;
-                        case 'COURSES': $uploadDir = '../uploads/courses/'; break;
-                        case 'NEWS': $uploadDir = '../uploads/news/'; break;
-                        case 'TESTIMONIALS': $uploadDir = '../uploads/testimonials/'; break;
-                        default: $uploadDir = '../uploads/'; break;
+                        case 'USERS': $uploadDir = './uploads/avatars/'; break;
+                        case 'COURSES': $uploadDir = './uploads/courses/'; break;
+                        case 'NEWS': $uploadDir = './uploads/news/'; break;
+                        case 'TESTIMONIALS': $uploadDir = './uploads/testimonials/'; break;
+                        default: $uploadDir = './uploads/'; break;
                     }
                     if (!is_dir($uploadDir)) {
                         mkdir($uploadDir, 0777, true);
