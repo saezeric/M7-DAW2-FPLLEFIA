@@ -103,10 +103,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Mostrar mensajes de éxito o error -->
         <?php if (isset($success)): ?>
-            <div class="success-message"><?php echo $success; ?></div>
+            <div class="success-message"><?= $success; ?></div>
         <?php endif; ?>
         <?php if (isset($error)): ?>
-            <div class="error-message"><?php echo $error; ?></div>
+            <div class="error-message"><?= $error; ?></div>
         <?php endif; ?>
 
         <form method="POST">

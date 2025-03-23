@@ -12,14 +12,14 @@ echo "</pre>";
 foreach ($users as $user): ?>
     <div class="card">
         <div class="card-header">
-            <img src="path_to_images/<?php echo $user['avatar']; ?>" alt="Avatar" class="avatar">
+            <img src="path_to_images/<?= $user['avatar']; ?>" alt="Avatar" class="avatar">
         </div>
         <div class="card-body">
-            <h5 class="card-title"><?php echo $user['name'] . ' ' . $user['surname']; ?></h5>
-            <p class="card-text"><strong>Email:</strong> <?php echo $user['email']; ?></p>
-            <p class="card-text"><strong>Edad:</strong> <?php echo $user['age']; ?> años</p>
-            <p class="card-text"><strong>Rol:</strong> <?php echo ucfirst($user['rol']); ?></p>
-            <p class="card-text"><strong>Fecha de registro:</strong> <?php echo $user['date_register']; ?></p>
+            <h5 class="card-title"><?= $user['name'] . ' ' . $user['surname']; ?></h5>
+            <p class="card-text"><strong>Email:</strong> <?= $user['email']; ?></p>
+            <p class="card-text"><strong>Edad:</strong> <?= $user['age']; ?> años</p>
+            <p class="card-text"><strong>Rol:</strong> <?= ucfirst($user['rol']); ?></p>
+            <p class="card-text"><strong>Fecha de registro:</strong> <?= $user['date_register']; ?></p>
         </div>
     </div>
 <?php endforeach; ?>

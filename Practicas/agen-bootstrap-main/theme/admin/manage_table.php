@@ -222,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>Gestionar <?php echo ucfirst($table); ?></title>
+    <title>Gestionar <?= ucfirst($table); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-name" content="agen" />
     <link rel="stylesheet" href="../plugins/bootstrap/bootstrap.min.css">
@@ -257,13 +257,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </section>
     <div class="custom-container mt-5">
-        <h2 class="text-center mb-4">Gestionar <?php echo ucfirst($table); ?></h2>
+        <h2 class="text-center mb-4">Gestionar <?= ucfirst($table); ?></h2>
         <div class="section-border"></div>
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger">
                 <ul>
                     <?php foreach ($errors as $error): ?>
-                        <li><?php echo $error; ?></li>
+                        <li><?= $error; ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -289,16 +289,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </h5>
                                     <div class="card-content">
                                         <?php foreach ($row as $key => $value): ?>
-                                            <p class="card-text"><strong><?php echo ucfirst($key); ?>:</strong> <span><?php echo $value; ?></span></p>
+                                            <p class="card-text"><strong><?= ucfirst($key); ?>:</strong> <span><?= $value; ?></span></p>
                                         <?php endforeach; ?>
                                     </div>
                                     <div class="action-buttons">
                                         <!-- Botón de editar -->
-                                        <a href="manage_table.php?table=<?php echo $table; ?>&edit=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">
+                                        <a href="manage_table.php?table=<?= $table; ?>&edit=<?= $row['id']; ?>" class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
                                         <!-- Botón de eliminar con confirmación -->
-                                        <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelete(<?php echo $row['id']; ?>)">
+                                        <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="confirmDelete(<?= $row['id']; ?>)">
                                             <i class="fas fa-trash"></i> Eliminar
                                         </a>
                                     </div>
@@ -311,11 +311,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Formulario (modo Añadir o Editar) -->
             <div class="col-md-4">
                 <div class="form-container">
-                    <h3><?php echo $edit_mode ? 'Editar' : 'Añadir Nuevo'; ?></h3>
-                    <form action="manage_table.php?table=<?php echo $table; ?><?php echo $edit_mode ? "&edit=" . $edit_data['id'] : ""; ?>" method="POST">
+                    <h3><?= $edit_mode ? 'Editar' : 'Añadir Nuevo'; ?></h3>
+                    <form action="manage_table.php?table=<?= $table; ?><?= $edit_mode ? "&edit=" . $edit_data['id'] : ""; ?>" method="POST">
                         <div class="mb-3">
                             <label for="id" class="form-label">ID</label>
-                            <input type="text" class="form-control" id="id" name="id" value="<?php echo $next_id; ?>" readonly>
+                            <input type="text" class="form-control" id="id" name="id" value="<?= $next_id; ?>" readonly>
                         </div>
                         <?php
                         // Para COMMENTS, incluir el campo oculto de user_id
@@ -327,15 +327,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             // En modo edición para USERS, la contraseña se deja en blanco
                             $value = "";
                             if ($edit_mode && isset($edit_data[$field]) && !($table === 'USERS' && $field === 'password')) {
-                                $value = htmlspecialchars($edit_data[$field]);
+                                $value = $edit_data[$field];
                             }
                         ?>
                             <div class="mb-3">
-                                <label for="<?php echo $field; ?>" class="form-label"><?php echo $field_data['label']; ?></label>
-                                <input type="<?php echo $field_data['type']; ?>" class="form-control" id="<?php echo $field; ?>" name="<?php echo $field; ?>" value="<?php echo $value; ?>" <?php echo in_array($field, $required_fields) ? 'required' : ''; ?> <?php echo isset($field_data['step']) ? "step='{$field_data['step']}'" : ""; ?>>
+                                <label for="<?= $field; ?>" class="form-label"><?= $field_data['label']; ?></label>
+                                <input type="<?= $field_data['type']; ?>" class="form-control" id="<?= $field; ?>" name="<?= $field; ?>" value="<?= $value; ?>" <?= in_array($field, $required_fields) ? 'required' : ''; ?> <?= isset($field_data['step']) ? "step='{$field_data['step']}'" : ""; ?>>
                             </div>
                         <?php endforeach; ?>
-                        <button type="submit" class="btn btn-primary"><?php echo $edit_mode ? 'Guardar Cambios' : 'Añadir'; ?></button>
+                        <button type="submit" class="btn btn-primary"><?= $edit_mode ? 'Guardar Cambios' : 'Añadir'; ?></button>
                     </form>
                 </div>
             </div>
@@ -370,7 +370,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       function confirmDelete(id) {
           var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
           document.getElementById('confirmDeleteBtn').onclick = function() {
-              window.location.href = "manage_table.php?table=<?php echo $table; ?>&delete=" + id;
+              window.location.href = "manage_table.php?table=<?= $table; ?>&delete=" + id;
           };
           deleteModal.show();
       }

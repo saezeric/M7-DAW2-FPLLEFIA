@@ -254,11 +254,11 @@ $news_result = $mysqli->query($news_query);
               <div class="card mb-4 rounded-0 border-0">
                 <div class="card-header rounded-0 bg-white border p-0 border-0">
                   <a class="card-link h4 d-flex tex-dark mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion' . $counter . '">
-                    <span>' . htmlspecialchars($faq['question']) . '</span> <i class="ti-plus text-right"></i>
+                    <span>' . $faq['question'] . '</span> <i class="ti-plus text-right"></i>
                   </a>
                 </div>
                 <div id="accordion' . $counter . '" class="collapse" data-parent="#accordion">
-                  <div class="card-body font-secondary text-color">' . htmlspecialchars($faq['answer']) . '</div>
+                  <div class="card-body font-secondary text-color">' . $faq['answer'] . '</div>
                 </div>
               </div>';
               $counter++; // Incrementar el contador para el siguiente ID

@@ -39,11 +39,11 @@ $result = $mysqli->query($query);
       <?php while ($news = $result->fetch_assoc()): ?>
         <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
           <article class="card h-100">
-            <img src="<?= htmlspecialchars($news['image']) ?>" alt="post-thumb" class="card-img-top mb-2 img-fixed">
+            <img src="<?= $news['image'] ?>" alt="post-thumb" class="card-img-top mb-2 img-fixed">
             <div class="card-body d-flex flex-column">
               <time><?= date("F j, Y", strtotime($news['new_date'])) ?></time>
               <a href="noticia.php?id=<?= $news['id'] ?>" class="h4 card-title d-block my-3 text-dark hover-text-underline">
-                <?= htmlspecialchars($news['title']) ?>
+                <?= $news['title'] ?>
               </a>
               <a href="noticia.php?id=<?= $news['id'] ?>" class="btn btn-transparent mt-auto">Leer más</a>
             </div>

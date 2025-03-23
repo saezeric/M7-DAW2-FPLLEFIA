@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
         <!-- Mostrar mensajes de error -->
         <?php if (isset($error)): ?>
-            <div class="error-message"><?php echo $error; ?></div>
+            <div class="error-message"><?= $error; ?></div>
         <?php endif; ?>
 
         <form method="POST">
