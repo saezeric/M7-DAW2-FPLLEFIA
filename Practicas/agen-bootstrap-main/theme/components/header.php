@@ -99,7 +99,7 @@ require_once("config.php");
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <h6 class="dropdown-header">Hola, <?= $_SESSION['user_name'] ?></h6>
                                 <?php if ($_SESSION['user_rol'] === 'admin'): ?>
-                                    <a class="dropdown-item" href="../admin/admin.php">Panel Admin</a>
+                                    <a class="dropdown-item" href="./admin/admin.php">Panel Admin</a>
                                 <?php endif; ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="logout.php">Cerrar Sesión</a>

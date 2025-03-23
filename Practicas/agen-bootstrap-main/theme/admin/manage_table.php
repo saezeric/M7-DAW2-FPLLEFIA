@@ -1,10 +1,10 @@
 <?php
 session_start();
-require_once("../config.php");
+require_once("./config.php");
 
 // Verificar acceso de administrador
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
+    header("Location: ./login.php");
     exit();
 } elseif ($_SESSION['user_rol'] !== 'admin') {
     echo '<!DOCTYPE html>
@@ -28,7 +28,7 @@ if (!isset($_SESSION['user_id'])) {
         <div class="error-message">
           <h1>Acceso Denegado</h1>
           <p>No tienes permisos para acceder a esta página.</p>
-          <a href="../index.php" class="btn btn-primary">Volver a la Página Principal</a>
+          <a href="./index.php" class="btn btn-primary">Volver a la Página Principal</a>
         </div>
       </div>
     </body>
@@ -169,11 +169,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (in_array($fileExtension, $allowedExtensions)) {
                     // Definir carpeta destino según la tabla; usar rutas relativas a la carpeta admin
                     switch ($table) {
-                        case 'USERS': $uploadDir = '../uploads/avatars/'; break;
-                        case 'COURSES': $uploadDir = '../uploads/courses/'; break;
-                        case 'NEWS': $uploadDir = '../uploads/news/'; break;
-                        case 'TESTIMONIALS': $uploadDir = '../uploads/testimonials/'; break;
-                        default: $uploadDir = '../uploads/'; break;
+                        case 'USERS': $uploadDir = './uploads/avatars/'; break;
+                        case 'COURSES': $uploadDir = './uploads/courses/'; break;
+                        case 'NEWS': $uploadDir = './uploads/news/'; break;
+                        case 'TESTIMONIALS': $uploadDir = './uploads/testimonials/'; break;
+                        default: $uploadDir = './uploads/'; break;
                     }
                     if (!is_dir($uploadDir)) {
                         mkdir($uploadDir, 0777, true);
@@ -265,14 +265,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Gestionar <?= ucfirst($table); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-name" content="agen" />
-    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../plugins/slick/slick.css">
-    <link rel="stylesheet" href="../plugins/themify-icons/themify-icons.css">
-    <link rel="stylesheet" href="../plugins/venobox/venobox.css">
-    <link rel="stylesheet" href="../plugins/card-slider/css/style.css">
-    <link href="../css/style.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./plugins/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./plugins/slick/slick.css">
+    <link rel="stylesheet" href="./plugins/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="./plugins/venobox/venobox.css">
+    <link rel="stylesheet" href="./plugins/card-slider/css/style.css">
+    <link href="./css/style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
     <style>
         .custom-container { max-width: 1400px; margin: 0 auto; }
         .card { margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: none; border-radius: 10px; height: 100%; display: flex; flex-direction: column; }
