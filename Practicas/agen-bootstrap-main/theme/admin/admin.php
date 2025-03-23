@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once("./config.php");
+require_once("../config.php");
 
 // Verificar si el usuario está logueado y tiene rol de administrador
 if (!isset($_SESSION['user_id'])) {
     // Si no está logueado, redirigir al login
-    header("Location: ./login.php");
+    header("Location: ../login.php");
     exit();
 } elseif ($_SESSION['user_rol'] !== 'admin') {
     // Si no es administrador, mostrar un mensaje de error y no cargar el contenido
@@ -55,7 +55,7 @@ if (!isset($_SESSION['user_id'])) {
                 <div class='error-message'>
                     <h1>Acceso Denegado</h1>
                     <p>No tienes permisos para acceder a esta página.</p>
-                    <a href='./index.php' class='btn btn-primary'>Volver a la Página Principal</a>
+                    <a href='../index.php' class='btn btn-primary'>Volver a la Página Principal</a>
                 </div>
             </div>
         </body>
@@ -79,22 +79,22 @@ if (!isset($_SESSION['user_id'])) {
 
     <!-- ** Plugins Needed for the Project ** -->
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="./plugins/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/bootstrap.min.css">
     <!-- slick slider -->
-    <link rel="stylesheet" href="./plugins/slick/slick.css">
+    <link rel="stylesheet" href="../plugins/slick/slick.css">
     <!-- themefy-icon -->
-    <link rel="stylesheet" href="./plugins/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="../plugins/themify-icons/themify-icons.css">
     <!-- venobox css -->
-    <link rel="stylesheet" href="./plugins/venobox/venobox.css">
+    <link rel="stylesheet" href="../plugins/venobox/venobox.css">
     <!-- card slider -->
-    <link rel="stylesheet" href="./plugins/card-slider/css/style.css">
+    <link rel="stylesheet" href="../plugins/card-slider/css/style.css">
 
     <!-- Main Stylesheet -->
-    <link href="./css/style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 
     <!--Favicon-->
-    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 
 </head>
 <body>
@@ -179,7 +179,7 @@ if (!isset($_SESSION['user_id'])) {
 
     <!-- Botón de volver a la página principal -->
     <div class="section-sm container text-center">
-        <a href="./index.php" class="btn btn-primary">Volver a la Página Principal</a>
+        <a href="../index.php" class="btn btn-primary">Volver a la Página Principal</a>
     </div>
 
 </body>

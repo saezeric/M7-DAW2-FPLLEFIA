@@ -64,7 +64,7 @@ if ($result && $row = mysqli_fetch_assoc($result)) {
             <p><?php echo $row['description']; ?></p>
           </div>
           <div class="additional-content">
-            <p><?php echo $row['full_text']; ?></p>
+            <p><?php echo $row['full_text'] ?? ''; ?></p>
           </div>
         </div>
       </div>
