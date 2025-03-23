@@ -2,7 +2,7 @@
 session_start();
 require_once("../config.php");
 
-// Verificar si el usuario está logueado y tiene rol de administrador
+// Verificar acceso de administrador
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../login.php");
     exit();
@@ -54,7 +54,7 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     }
 }
 
-// Detectar si se está en modo edición (se pasa el parámetro "edit" con el id)
+// Detectar modo edición
 $edit_mode = false;
 $edit_data = [];
 if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
@@ -69,7 +69,7 @@ if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
     }
 }
 
-// Consultar todos los registros de la tabla
+// Consultar todos los registros
 $query = "SELECT * FROM $table";
 $result = $mysqli->query($query);
 if (!$result) {
@@ -77,7 +77,7 @@ if (!$result) {
 }
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-// Calcular el próximo ID (modo añadir) o usar el id actual (modo edición)
+// Calcular próximo ID (modo añadir) o usar id actual (modo edición)
 if (!$edit_mode) {
     $next_id_query = "SELECT MAX(id) + 1 AS next_id FROM $table";
     $next_id_result = $mysqli->query($next_id_query);
@@ -100,7 +100,7 @@ switch ($table) {
             'email'         => ['type' => 'email', 'label' => 'Correo Electrónico'],
             'password'      => ['type' => 'password', 'label' => 'Contraseña (déjala en blanco para no cambiar)'],
             'rol'           => ['type' => 'text', 'label' => 'Rol'],
-            'avatar'        => ['type' => 'text', 'label' => 'Avatar (URL)'],
+            'avatar'        => ['type' => 'file', 'label' => 'Avatar'], // Campo de archivo
             'age'           => ['type' => 'number', 'label' => 'Edad'],
             'date_register' => ['type' => 'date', 'label' => 'Fecha de Registro']
         ];
@@ -110,7 +110,7 @@ switch ($table) {
         $form_fields = [
             'title'       => ['type' => 'text', 'label' => 'Título'],
             'url'         => ['type' => 'text', 'label' => 'URL'],
-            'image'       => ['type' => 'text', 'label' => 'Imagen (URL)'],
+            'image'       => ['type' => 'file', 'label' => 'Imagen'], // Campo de archivo
             'description' => ['type' => 'text', 'label' => 'Descripción'],
             'precio'      => ['type' => 'number', 'label' => 'Precio', 'step' => '0.01']
         ];
@@ -120,7 +120,7 @@ switch ($table) {
         $form_fields = [
             'title'       => ['type' => 'text', 'label' => 'Título'],
             'subtitle'    => ['type' => 'text', 'label' => 'Subtítulo'],
-            'image'       => ['type' => 'text', 'label' => 'Imagen (URL)'],
+            'image'       => ['type' => 'file', 'label' => 'Imagen'], // Campo de archivo
             'description' => ['type' => 'text', 'label' => 'Descripción'],
             'new_date'    => ['type' => 'date', 'label' => 'Fecha de la Noticia']
         ];
@@ -137,7 +137,7 @@ switch ($table) {
         $form_fields = [
             'name'        => ['type' => 'text', 'label' => 'Nombre'],
             'surname'     => ['type' => 'text', 'label' => 'Apellido'],
-            'image'       => ['type' => 'text', 'label' => 'Imagen (URL)'],
+            'image'       => ['type' => 'file', 'label' => 'Imagen'], // Campo de archivo
             'description' => ['type' => 'text', 'label' => 'Descripción'],
             'rating'      => ['type' => 'number', 'label' => 'Calificación']
         ];
@@ -157,7 +157,48 @@ switch ($table) {
 // Procesar el formulario al enviar
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validar campos obligatorios (en edición, la contraseña en USERS puede quedar vacía)
+    // Primero, procesar campos tipo file
+    foreach ($form_fields as $field => $field_data) {
+        if (isset($field_data['type']) && $field_data['type'] === 'file') {
+            if (isset($_FILES[$field]) && $_FILES[$field]['error'] === UPLOAD_ERR_OK) {
+                $fileTmpPath = $_FILES[$field]['tmp_name'];
+                $fileName = $_FILES[$field]['name'];
+                $fileNameCmps = explode(".", $fileName);
+                $fileExtension = strtolower(end($fileNameCmps));
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'avif', 'webp', 'jfif'];
+                if (in_array($fileExtension, $allowedExtensions)) {
+                    // Definir carpeta destino según la tabla; usar rutas relativas a la carpeta admin
+                    switch ($table) {
+                        case 'USERS': $uploadDir = '../uploads/avatars/'; break;
+                        case 'COURSES': $uploadDir = '../uploads/courses/'; break;
+                        case 'NEWS': $uploadDir = '../uploads/news/'; break;
+                        case 'TESTIMONIALS': $uploadDir = '../uploads/testimonials/'; break;
+                        default: $uploadDir = '../uploads/'; break;
+                    }
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+                    $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                    $dest_path = $uploadDir . $newFileName;
+                    if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                        $_POST[$field] = $dest_path;
+                    } else {
+                        $errors[] = "Error al mover el archivo para $field.";
+                    }
+                } else {
+                    $errors[] = "Extensión no permitida para $field. Solo se permiten: " . implode(", ", $allowedExtensions);
+                }
+            } else {
+                // Si no se subió archivo: en edición conservar valor anterior; en añadir, dejar vacío
+                if ($edit_mode) {
+                    $_POST[$field] = $edit_data[$field];
+                } else {
+                    $_POST[$field] = "";
+                }
+            }
+        }
+    }
+    // Validar campos obligatorios (para USERS, en edición la contraseña puede quedar vacía)
     foreach ($required_fields as $field) {
         if ($table === 'USERS' && $field === 'password' && $edit_mode) {
             continue;
@@ -169,10 +210,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         if ($edit_mode) {
-            // Modo edición: construir consulta UPDATE
+            // Modo edición: UPDATE
             $update_parts = [];
             foreach ($_POST as $key => $value) {
-                // En USERS, si el campo es password y está vacío, se omite actualizarlo
                 if ($table === 'USERS' && $key === 'password') {
                     if (empty($value)) { continue; }
                     else { $value = password_hash($value, PASSWORD_DEFAULT); }
@@ -192,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errors[] = "Error al actualizar en la base de datos: " . $mysqli->error;
             }
         } else {
-            // Modo añadir: en USERS, hashear la contraseña
+            // Modo añadir: INSERT
             if ($table === 'USERS' && isset($_POST['password']) && !empty($_POST['password'])) {
                 $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
             }
@@ -312,19 +352,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-4">
                 <div class="form-container">
                     <h3><?= $edit_mode ? 'Editar' : 'Añadir Nuevo'; ?></h3>
-                    <form action="manage_table.php?table=<?= $table; ?><?= $edit_mode ? "&edit=" . $edit_data['id'] : ""; ?>" method="POST">
+                    <form action="manage_table.php?table=<?= $table; ?><?= $edit_mode ? "&edit=" . $edit_data['id'] : ""; ?>" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="id" class="form-label">ID</label>
                             <input type="text" class="form-control" id="id" name="id" value="<?= $next_id; ?>" readonly>
                         </div>
                         <?php
-                        // Para COMMENTS, incluir el campo oculto de user_id
                         if ($table === 'COMMENTS') {
                             echo '<input type="hidden" name="user_id" value="' . $_SESSION['user_id'] . '">';
                         }
                         foreach ($form_fields as $field => $field_data):
                             if ($table === 'COMMENTS' && $field === 'user_id') { continue; }
-                            // En modo edición para USERS, la contraseña se deja en blanco
                             $value = "";
                             if ($edit_mode && isset($edit_data[$field]) && !($table === 'USERS' && $field === 'password')) {
                                 $value = $edit_data[$field];
@@ -332,7 +370,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ?>
                             <div class="mb-3">
                                 <label for="<?= $field; ?>" class="form-label"><?= $field_data['label']; ?></label>
-                                <input type="<?= $field_data['type']; ?>" class="form-control" id="<?= $field; ?>" name="<?= $field; ?>" value="<?= $value; ?>" <?= in_array($field, $required_fields) ? 'required' : ''; ?> <?= isset($field_data['step']) ? "step='{$field_data['step']}'" : ""; ?>>
+                                <input type="<?= $field_data['type']; ?>" class="form-control" id="<?= $field; ?>" name="<?= $field; ?>" 
+                                <?= ($field_data['type'] != 'file') ? 'value="' . htmlspecialchars($value) . '"' : '' ?>
+                                <?= in_array($field, $required_fields) ? 'required' : ''; ?> 
+                                <?= isset($field_data['step']) ? "step='{$field_data['step']}'" : ""; ?>>
                             </div>
                         <?php endforeach; ?>
                         <button type="submit" class="btn btn-primary"><?= $edit_mode ? 'Guardar Cambios' : 'Añadir'; ?></button>
@@ -373,6 +414,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               window.location.href = "manage_table.php?table=<?= $table; ?>&delete=" + id;
           };
           deleteModal.show();
+      }
+      function toggleReplyForm(commentId) {
+          var replyForm = document.getElementById("replyForm-" + commentId);
+          replyForm.style.display = (replyForm.style.display === "none") ? "block" : "none";
       }
     </script>
 </body>

@@ -9,23 +9,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $surname = $_POST['surname'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $avatar = $_POST['avatar'];
     $age = $_POST['age'];
 
-    // 2. CIFRAR LA PASSWORD CON PASSWORD HASH
+    // Procesar la subida del avatar
+    $avatar = ""; // Valor por defecto
+    if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['avatar']['tmp_name'];
+        $fileName = $_FILES['avatar']['name'];
+        $fileSize = $_FILES['avatar']['size'];
+        $fileType = $_FILES['avatar']['type'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+
+        // Extensiones permitidas
+        $allowedfileExtensions = array('jpg', 'jpeg', 'png', 'avif', 'webp', 'jfif');
+        if (in_array($fileExtension, $allowedfileExtensions)) {
+            $uploadFileDir = './uploads/avatars/';
+            // Crear la carpeta si no existe
+            if (!is_dir($uploadFileDir)) {
+                mkdir($uploadFileDir, 0777, true);
+            }
+            // Renombrar el archivo para evitar conflictos
+            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+            $dest_path = $uploadFileDir . $newFileName;
+            if(move_uploaded_file($fileTmpPath, $dest_path)) {
+                $avatar = $dest_path; // Guardamos la ruta para insertar en la BD
+            } else {
+                $error = "Error al mover el archivo subido.";
+            }
+        } else {
+            $error = "La extensión del archivo no es permitida. Solo se permiten: " . implode(',', $allowedfileExtensions);
+        }
+    } else {
+        // Si no se sube archivo, se puede asignar un avatar por defecto o dejarlo vacío
+        $avatar = "";
+    }
+
+    // 2. CIFRAR LA PASSWORD CON PASSWORD_HASH
     $passwordHashed = password_hash($password, PASSWORD_DEFAULT);
 
-    // 3. PREPARAR LA CONSULTA ANTES DE INSERTAR PARA EVITAR EL SQL INJECTION
+    // 3. PREPARAR LA CONSULTA ANTES DE INSERTAR PARA EVITAR SQL INJECTION
     $stmt = $mysqli->prepare(
         "INSERT INTO USERS (name, surname, email, avatar, password, rol, age, date_register) VALUES (?,?,?,?,?, 'user', ?, NOW())"
     );
 
-    // 4. COMPROBAR QUE LA PREPARACION TUVO EXITO
+    // 4. COMPROBAR QUE LA PREPARACION TUVO ÉXITO
     if (!$stmt) {
-        die('Error en la preparacion: ' . $mysqli->error);
+        die('Error en la preparación: ' . $mysqli->error);
     }
 
-    //5. BINDEAR LOS PARAMETROS
+    // 5. BINDEAR LOS PARÁMETROS
     $stmt->bind_param("sssssi", $name, $surname, $email, $avatar, $passwordHashed, $age);
 
     if ($stmt->execute()) {
@@ -34,10 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Error al registrar el usuario";
     }
 
-    // 7. CERRAR LA CONEXION
+    // 6. CERRAR LA CONEXIÓN
     $stmt->close();
     $mysqli->close();
-};
+}
 ?>
 
 <!DOCTYPE html>
@@ -109,7 +142,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="error-message"><?= $error; ?></div>
         <?php endif; ?>
 
-        <form method="POST">
+        <!-- Se añade enctype="multipart/form-data" para permitir subir archivos -->
+        <form method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="name" name="name" required>
@@ -126,9 +160,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="password" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            <!-- Campo de subida de avatar -->
             <div class="mb-3">
-                <label for="avatar" class="form-label">Avatar (URL)</label>
-                <input type="text" class="form-control" id="avatar" name="avatar">
+                <label for="avatar" class="form-label">Avatar (subir imagen)</label>
+                <input type="file" class="form-control" id="avatar" name="avatar">
             </div>
             <div class="mb-3">
                 <label for="age" class="form-label">Edad</label>
