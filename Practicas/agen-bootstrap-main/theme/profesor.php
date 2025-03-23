@@ -3,11 +3,13 @@ include("./components/header.php");
 ?>
 
 <!-- page-title -->
-<section class="page-title bg-cover" data-background="images/backgrounds/page-title.jpg">
-  <div class="container-fluid w-75 d-flex justify-content-center">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h1 class="display-1 text-white font-weight-bold font-primary">Nuestro Equipo</h1>
+<section class="page-title bg-cover position-relative" style="background-image: url('https://images.pexels.com/photos/3184423/pexels-photo-3184423.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');" style="background-color: rgba(0, 0, 0, 0.05);">
+  <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.05);"></div>
+    <div class="container-fluid w-75 d-flex justify-content-center">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="display-1 text-white font-weight-bold font-primary">Nuestro Equipo</h1>
+        </div>
       </div>
     </div>
   </div>
@@ -163,7 +165,7 @@ if (isset($_GET['id'])) {
                        class="card-img-top"
                        style="object-fit: cover; height: 400px">
                   <div class="card-body text-center position-relative zindex-1">
-                    <h4><a class="text-dark" href="team-single.php?id=' . $professor['id'] . '">'
+                    <h4><a class="text-dark" href="profesor.php?id=' . $professor['id'] . '">'
             . $professor['name'] . ' ' . $professor['surname'] . '</a></h4>
                   </div>
                 </div>

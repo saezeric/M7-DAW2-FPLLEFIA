@@ -8,35 +8,21 @@ $news_result = $mysqli->query($news_query);
 ?>
 
 <!-- banner -->
-<section class="banner bg-cover position-relative d-flex justify-content-center align-items-center"
-  data-background="images/banner/banner2.jpg">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h1 class="display-1 text-white font-weight-bold font-primary">MYAI</h1>
-        <h2 class="display-6 text-white font-weight-bold font-primary">La primera Academia Online Especializada en IA de España</h2>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- /banner -->
 
-<!-- about -->
-<section class="section-lg position-relative bg-cover" data-background="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-  <img src="images/backgrounds/about-bg-overlay.png" alt="overlay" class="overlay-image img-fluid">
-  <div class="container">
-    <div class="row justify-content-between">
-      <div class="col-lg-6 col-md-8 col-sm-7 col-8">
-        <h2 class="text-white mb-4">¿Quienes Somos?</h2>
-        <p class="text-light mb-4" style="width: 75%">En MyAI, somos pioneros en la revolución educativa de la inteligencia artificial en España. Como la primera empresa especializada en cursos de IA, nuestro compromiso es liderar la formación en una de las tecnologías más transformadoras de nuestro tiempo.</p>
-        <a href="about.php" class="btn btn-primary">Leer más</a>
-      </div>
-      <div class="col-md-2 col-sm-4 col-4 text-right align-self-end">
+<!-- page-title -->
+<section class="page-title bg-cover position-relative" style="background-image: url('https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');" style="background-color: rgba(0, 0, 0, 0.05);">
+  <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.05);"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="display-1 text-white font-weight-bold font-primary">MYAI</h1>
+          <h2 class="display-6 text-white font-weight-bold font-primary">La primera Academia Online Especializada en IA de España</h2>
+        </div>
       </div>
     </div>
   </div>
 </section>
-<!-- /about -->
+<!-- /page-title -->
 
 <!-- project -->
 <section id="portfolio" class="section">
@@ -88,6 +74,23 @@ $news_result = $mysqli->query($news_query);
 </section>
 <!-- /project -->
 
+<!-- about -->
+<section class="section-lg position-relative bg-cover" data-background="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+  <img src="images/backgrounds/about-bg-overlay.png" alt="overlay" class="overlay-image img-fluid">
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-lg-6 col-md-8 col-sm-7 col-8">
+        <h2 class="text-white mb-4">¿Quienes Somos?</h2>
+        <p class="text-light mb-4" style="width: 75%">En MyAI, somos pioneros en la revolución educativa de la inteligencia artificial en España. Como la primera empresa especializada en cursos de IA, nuestro compromiso es liderar la formación en una de las tecnologías más transformadoras de nuestro tiempo.</p>
+        <a href="sobre-nosotros.php" class="btn btn-primary">Leer más</a>
+      </div>
+      <div class="col-md-2 col-sm-4 col-4 text-right align-self-end">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /about -->
+
 <!-- call to action -->
 <section class="section">
   <div class="container section-sm overlay-secondary-half bg-cover" data-background="https://images.pexels.com/photos/313690/pexels-photo-313690.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
@@ -123,14 +126,14 @@ $news_result = $mysqli->query($news_query);
           echo '
               <div class="col-lg-3 col-sm-6">
                 <div class="card hover-shadow">
-                  <a href="team-single.php?id=' . $professor['id'] . '">
+                  <a href="profesor.php?id=' . $professor['id'] . '">
                     <img src="' . $professor['avatar'] . '" 
                          alt="' . $professor['name'] . ' ' . $professor['surname'] . '" 
                          class="card-img-top"
                          style="object-fit: cover; height: 400px">
                   </a>
                   <div class="card-body text-center position-relative zindex-1">
-                    <h4><a class="text-dark" href="team-single.php?id=' . $professor['id'] . '">'
+                    <h4><a class="text-dark" href="profesor.php?id=' . $professor['id'] . '">'
             . $professor['name'] . ' ' . $professor['surname'] . '</a></h4>
                   </div>
                 </div>
@@ -204,10 +207,10 @@ $news_result = $mysqli->query($news_query);
             <img src="<?= $news['image'] ?>" alt="post-thumb" class="card-img-top mb-2 img-fixed">
             <div class="card-body d-flex flex-column">
               <time><?= date("F j, Y", strtotime($news['new_date'])) ?></time>
-              <a href="blog-single.php?id=<?= $news['id'] ?>" class="h4 card-title d-block my-3 text-dark hover-text-underline">
+              <a href="noticia.php?id=<?= $news['id'] ?>" class="h4 card-title d-block my-3 text-dark hover-text-underline">
                 <?= $news['title'] ?>
               </a>
-              <a href="blog-single.php?id=<?= $news['id'] ?>" class="btn btn-transparent mt-auto">Leer más</a>
+              <a href="noticia.php?id=<?= $news['id'] ?>" class="btn btn-transparent mt-auto">Leer más</a>
             </div>
           </article>
         </div>
@@ -230,6 +233,46 @@ $news_result = $mysqli->query($news_query);
   </div>
 </section>
 <!-- /call to action -->
+
+<!-- faqs -->
+<section class="section bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div id="accordion">
+          <?php
+          // Consulta SQL para obtener las FAQs
+          $faqs_query = "SELECT * FROM FAQS";
+          $result = $mysqli->query($faqs_query);
+
+          // Verificar si hay resultados
+          if ($result && $result->num_rows > 0) {
+            $counter = 1; // Contador para los IDs de los acordeones
+            while ($faq = $result->fetch_assoc()) {
+              echo '
+              <!-- accordion item -->
+              <div class="card mb-4 rounded-0 border-0">
+                <div class="card-header rounded-0 bg-white border p-0 border-0">
+                  <a class="card-link h4 d-flex tex-dark mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion' . $counter . '">
+                    <span>' . htmlspecialchars($faq['question']) . '</span> <i class="ti-plus text-right"></i>
+                  </a>
+                </div>
+                <div id="accordion' . $counter . '" class="collapse" data-parent="#accordion">
+                  <div class="card-body font-secondary text-color">' . htmlspecialchars($faq['answer']) . '</div>
+                </div>
+              </div>';
+              $counter++; // Incrementar el contador para el siguiente ID
+            }
+          } else {
+            echo '<div class="col-12 text-center"><p>No hay preguntas frecuentes disponibles en este momento.</p></div>';
+          }
+          ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /faqs -->
 
 <?php
 

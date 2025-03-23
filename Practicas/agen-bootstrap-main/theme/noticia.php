@@ -11,16 +11,19 @@ $result = mysqli_query($mysqli, $sql);
 if ($result && $row = mysqli_fetch_assoc($result)) {
 ?>
 
-  <!-- Título de la noticia -->
-  <section class="page-title bg-cover" data-background="images/backgrounds/page-title.jpg">
-    <div class="container-fluid w-75 d-flex justify-content-center">
-      <div class="row">
-        <div class="col-12 text-center">
-          <h1 class="display-1 text-white font-weight-bold font-primary"><?php echo $row['title']; ?></h1>
+  <!-- page-title -->
+  <section class="page-title bg-cover position-relative" style="background-image: url('<?php echo $row['image']; ?>');">
+    <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.05);"></div>
+      <div class="container-fluid w-75 d-flex justify-content-center">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="display-1 text-white font-weight-bold font-primary"><?php echo $row['title']; ?></h1>
+          </div>
         </div>
       </div>
     </div>
   </section>
+  <!-- /page-title -->
 
   <!-- Contenido de la noticia -->
   <section class="section">

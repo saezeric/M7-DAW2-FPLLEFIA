@@ -40,7 +40,7 @@ include("./components/header.php");
                        class="card-img-top"
                        style="object-fit: cover; height: 400px">
                   <div class="card-body text-center position-relative zindex-1">
-                    <h4><a class="text-dark" href="team-single.php?id=' . $professor['id'] . '">'
+                    <h4><a class="text-dark" href="profesor.php?id=' . $professor['id'] . '">'
             . $professor['name'] . ' ' . $professor['surname'] . '</a></h4>
                   </div>
                 </div>

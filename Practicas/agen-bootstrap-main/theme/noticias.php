@@ -19,11 +19,13 @@ $result = $mysqli->query($query);
 ?>
 
 <!-- page-title -->
-<section class="page-title bg-cover" data-background="images/backgrounds/page-title.jpg">
-  <div class="container-fluid w-75 d-flex justify-content-center">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h1 class="display-1 text-white font-weight-bold font-primary">Últimas Noticias sobre la Inteligencia Artificial</h1>
+<section class="page-title bg-cover position-relative" style="background-image: url('https://images.pexels.com/photos/518543/pexels-photo-518543.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');" style="background-color: rgba(0, 0, 0, 0.05);">
+  <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.05);"></div>
+    <div class="container-fluid w-75 d-flex justify-content-center">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="display-1 text-white font-weight-bold font-primary">Últimas Noticias sobre la Inteligencia Artificial</h1>
+        </div>
       </div>
     </div>
   </div>
@@ -40,10 +42,10 @@ $result = $mysqli->query($query);
             <img src="<?= htmlspecialchars($news['image']) ?>" alt="post-thumb" class="card-img-top mb-2 img-fixed">
             <div class="card-body d-flex flex-column">
               <time><?= date("F j, Y", strtotime($news['new_date'])) ?></time>
-              <a href="blog-single.php?id=<?= $news['id'] ?>" class="h4 card-title d-block my-3 text-dark hover-text-underline">
+              <a href="noticia.php?id=<?= $news['id'] ?>" class="h4 card-title d-block my-3 text-dark hover-text-underline">
                 <?= htmlspecialchars($news['title']) ?>
               </a>
-              <a href="blog-single.php?id=<?= $news['id'] ?>" class="btn btn-transparent mt-auto">Leer más</a>
+              <a href="noticia.php?id=<?= $news['id'] ?>" class="btn btn-transparent mt-auto">Leer más</a>
             </div>
           </article>
         </div>
