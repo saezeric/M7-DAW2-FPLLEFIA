@@ -12,10 +12,7 @@
         <input type="email" placeholder="Correo Electrónico" required />
         <span class="error-message" id="error-email"></span>
 
-        <textarea
-          placeholder="Describa el motivo del contacto"
-          required
-        ></textarea>
+        <textarea placeholder="Describa el motivo del contacto" required></textarea>
         <span class="error-message" id="error-message"></span>
 
         <button type="submit">ENVIAR</button>
@@ -29,17 +26,21 @@
       <div class="col-md-12">
         <h3>Información Personal</h3>
         <div class="d-flex justify-content-between my-4">
-          <p>Email: [tu email]</p>
-          <p>Teléfono: [opcional]</p>
+          <p>Email: <a href="mailto:ericsaez13@gmail.com" class="text-decoration-none">ericsaez13@gmail.com</a></p>
+          <p>Teléfono: <a href="tel:+34633191460" class="text-decoration-none">+34 633 19 14 60</a></p>
           <p>
             LinkedIn:
-            <a href="[enlace a tu perfil]">[enlace a tu perfil]</a>
+            <a href="https://www.linkedin.com/in/eric-saez-escalona-877049258/" target="_blank" class="text-decoration-none">
+              Eric Sáez
+            </a>
           </p>
           <p>
             GitHub:
-            <a href="[enlace a tu perfil]">[enlace a tu perfil]</a>
+            <a href="https://github.com/saezeric" target="_blank" class="text-decoration-none">
+              saezeric
+            </a>
           </p>
-          <p>Ubicación: [ciudad, país]</p>
+          <p>Ubicación: Badalona, Barcelona</p>
         </div>
       </div>
       <div class="col-md-12">
@@ -48,6 +49,7 @@
       </div>
     </div>
   </section>
+
 </footer>
 </div>
 
@@ -55,20 +57,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Script para manejar el menú desplegable -->
 <script>
-  document
-    .getElementById("menuToggle")
-    .addEventListener("click", function () {
-      const sidebar = document.getElementById("sidebar");
-      sidebar.classList.toggle("active");
-    });
+  document.getElementById("menuToggle").addEventListener("click", function() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("active");
+  });
 </script>
 
 <!-- Script de validación para formulario CTA -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("ctaForm");
 
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", function(e) {
       // Seleccionar campos y contenedores de error
       const nameInput = form.querySelector("input[type='text']");
       const emailInput = form.querySelector("input[type='email']");
@@ -97,8 +97,7 @@
 
       // Validación del campo Correo Electrónico
       if (emailInput.value.trim() === "") {
-        errorEmail.textContent =
-          "El campo Correo Electrónico es obligatorio.";
+        errorEmail.textContent = "El campo Correo Electrónico es obligatorio.";
         emailInput.classList.add("input-error");
         hasErrors = true;
       } else {
@@ -124,4 +123,5 @@
   });
 </script>
 </body>
+
 </html>
