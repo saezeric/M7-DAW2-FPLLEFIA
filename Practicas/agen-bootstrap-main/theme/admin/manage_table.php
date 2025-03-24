@@ -148,7 +148,7 @@ switch ($table) {
             'user_id'    => ['type' => 'number', 'label' => 'ID del Usuario'],
             'new_id'     => ['type' => 'number', 'label' => 'ID de la Noticia'],
             'comment_id' => ['type' => 'number', 'label' => 'ID del Comentario (opcional)'],
-            'description'=> ['type' => 'text', 'label' => 'Descripción'],
+            'description' => ['type' => 'text', 'label' => 'Descripción'],
             'data'       => ['type' => 'date', 'label' => 'Fecha']
         ];
         break;
@@ -169,11 +169,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (in_array($fileExtension, $allowedExtensions)) {
                     // Definir carpeta destino según la tabla; usar rutas relativas a la carpeta admin
                     switch ($table) {
-                        case 'USERS': $uploadDir = './uploads/avatars/'; break;
-                        case 'COURSES': $uploadDir = './uploads/courses/'; break;
-                        case 'NEWS': $uploadDir = './uploads/news/'; break;
-                        case 'TESTIMONIALS': $uploadDir = './uploads/testimonials/'; break;
-                        default: $uploadDir = './uploads/'; break;
+                        case 'USERS':
+                            $uploadDir = './uploads/avatars/';
+                            break;
+                        case 'COURSES':
+                            $uploadDir = './uploads/courses/';
+                            break;
+                        case 'NEWS':
+                            $uploadDir = './uploads/news/';
+                            break;
+                        case 'TESTIMONIALS':
+                            $uploadDir = './uploads/testimonials/';
+                            break;
+                        default:
+                            $uploadDir = './uploads/';
+                            break;
                     }
                     if (!is_dir($uploadDir)) {
                         mkdir($uploadDir, 0777, true);
@@ -214,8 +224,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $update_parts = [];
             foreach ($_POST as $key => $value) {
                 if ($table === 'USERS' && $key === 'password') {
-                    if (empty($value)) { continue; }
-                    else { $value = password_hash($value, PASSWORD_DEFAULT); }
+                    if (empty($value)) {
+                        continue;
+                    } else {
+                        $value = password_hash($value, PASSWORD_DEFAULT);
+                    }
                 }
                 if ($table === 'COMMENTS' && $key === 'comment_id' && trim($value) === "") {
                     $update_parts[] = "$key = NULL";
@@ -260,6 +273,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <title>Gestionar <?= ucfirst($table); ?></title>
@@ -274,16 +288,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
     <style>
-        .custom-container { max-width: 1400px; margin: 0 auto; }
-        .card { margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: none; border-radius: 10px; height: 100%; display: flex; flex-direction: column; }
-        .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-        .card-content { flex: 1; overflow-y: auto; }
-        .card-title { font-size: 1.25rem; font-weight: bold; margin-bottom: 15px; }
-        .card-text { font-size: 0.9rem; color: #6c757d; margin-bottom: 10px; }
-        .action-buttons { margin-top: auto; display: flex; justify-content: flex-end; gap: 10px; }
-        .form-container { background-color: #f8f9fa; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .custom-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+            border-radius: 10px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .action-buttons {
+            margin-top: auto;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .form-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
     </style>
 </head>
+
 <body>
     <section class="page-title bg-cover position-relative" style="background-image: url('https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
         <div class="overlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.05);"></div>
@@ -362,7 +422,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             echo '<input type="hidden" name="user_id" value="' . $_SESSION['user_id'] . '">';
                         }
                         foreach ($form_fields as $field => $field_data):
-                            if ($table === 'COMMENTS' && $field === 'user_id') { continue; }
+                            if ($table === 'COMMENTS' && $field === 'user_id') {
+                                continue;
+                            }
                             $value = "";
                             if ($edit_mode && isset($edit_data[$field]) && !($table === 'USERS' && $field === 'password')) {
                                 $value = $edit_data[$field];
@@ -370,10 +432,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ?>
                             <div class="mb-3">
                                 <label for="<?= $field; ?>" class="form-label"><?= $field_data['label']; ?></label>
-                                <input type="<?= $field_data['type']; ?>" class="form-control" id="<?= $field; ?>" name="<?= $field; ?>" 
-                                <?= ($field_data['type'] != 'file') ? 'value="' . htmlspecialchars($value) . '"' : '' ?>
-                                <?= in_array($field, $required_fields) ? 'required' : ''; ?> 
-                                <?= isset($field_data['step']) ? "step='{$field_data['step']}'" : ""; ?>>
+                                <input type="<?= $field_data['type']; ?>" class="form-control" id="<?= $field; ?>" name="<?= $field; ?>"
+                                    <?= ($field_data['type'] != 'file') ? 'value="' . htmlspecialchars($value) . '"' : '' ?>
+                                    <?= in_array($field, $required_fields) ? 'required' : ''; ?>
+                                    <?= isset($field_data['step']) ? "step='{$field_data['step']}'" : ""; ?>>
                             </div>
                         <?php endforeach; ?>
                         <button type="submit" class="btn btn-primary"><?= $edit_mode ? 'Guardar Cambios' : 'Añadir'; ?></button>
@@ -385,40 +447,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="admin.php" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Volver al Panel</a>
         </div>
     </div>
-    
+
     <!-- Modal de confirmación de eliminación -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <div class="modal-body">
-            ¿Estás seguro de que deseas eliminar este registro?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Sí, eliminar</button>
-          </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar este registro?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Sí, eliminar</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      function confirmDelete(id) {
-          var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-          document.getElementById('confirmDeleteBtn').onclick = function() {
-              window.location.href = "manage_table.php?table=<?= $table; ?>&delete=" + id;
-          };
-          deleteModal.show();
-      }
-      function toggleReplyForm(commentId) {
-          var replyForm = document.getElementById("replyForm-" + commentId);
-          replyForm.style.display = (replyForm.style.display === "none") ? "block" : "none";
-      }
+        function confirmDelete(id) {
+            var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            document.getElementById('confirmDeleteBtn').onclick = function() {
+                window.location.href = "manage_table.php?table=<?= $table; ?>&delete=" + id;
+            };
+            deleteModal.show();
+        }
+
+        function toggleReplyForm(commentId) {
+            var replyForm = document.getElementById("replyForm-" + commentId);
+            replyForm.style.display = (replyForm.style.display === "none") ? "block" : "none";
+        }
     </script>
 </body>
+
 </html>

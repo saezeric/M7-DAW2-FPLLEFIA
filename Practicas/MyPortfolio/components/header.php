@@ -38,7 +38,7 @@ session_start();
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
           <?php if (isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'admin'): ?>
-            <li><a class="dropdown-item" href="admin_panel.php">Panel Admin</a></li>
+            <li><a class="dropdown-item" href="../admin/admin.php">Panel Admin</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -48,7 +48,7 @@ session_start();
       </div>
     <?php else: ?>
       <!-- Si no hay sesión, se muestra la imagen por defecto -->
-      <img src="https://via.placeholder.com/150" alt="Tu Nombre" />
+      <img src="https://via.placeholder.com/150" alt="" />
     <?php endif; ?>
 
     <nav>
