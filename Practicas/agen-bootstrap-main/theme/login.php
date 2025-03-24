@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             height: 100vh;
             margin: 0;
         }
+
         .login-container {
             background: white;
             padding: 2rem;
@@ -63,23 +64,28 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             max-width: 400px;
             width: 100%;
         }
+
         .login-container h1 {
             font-size: 2rem;
             margin-bottom: 1.5rem;
             text-align: center;
             color: #333;
         }
+
         .form-label {
             font-weight: 500;
         }
+
         .form-control {
             margin-bottom: 1rem;
         }
+
         .btn-primary {
             width: 100%;
             padding: 0.75rem;
             font-size: 1rem;
         }
+
         .error-message {
             color: red;
             text-align: center;

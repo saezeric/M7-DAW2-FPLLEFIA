@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -27,7 +30,27 @@
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <img src="https://via.placeholder.com/150" alt="Tu Nombre" />
+    <?php if (isset($_SESSION['user_id'])): ?>
+      <!-- Si el usuario está logueado, se muestra su avatar en la parte superior izquierda con dropdown -->
+      <div class="dropdown text-center">
+        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="<?= $_SESSION['user_avatar'] ?>" alt="Avatar" style="width: 150px; height: 150px; object-fit: cover;" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <?php if (isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'admin'): ?>
+            <li><a class="dropdown-item" href="admin_panel.php">Panel Admin</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+          <?php endif; ?>
+          <li><a class="dropdown-item" href="logout.php">Cerrar Sesión</a></li>
+        </ul>
+      </div>
+    <?php else: ?>
+      <!-- Si no hay sesión, se muestra la imagen por defecto -->
+      <img src="https://via.placeholder.com/150" alt="Tu Nombre" />
+    <?php endif; ?>
+
     <nav>
       <ul>
         <li><a href="index.php">Inicio</a></li>
@@ -38,4 +61,12 @@
         <li><a href="contacto.php">Contacto</a></li>
       </ul>
     </nav>
+
+    <?php if (!isset($_SESSION['user_id'])): ?>
+      <!-- Opciones de usuario: Iniciar Sesión y Registrarse, solo si no está logueado -->
+      <div class="user-options mt-3 text-center">
+        <a href="login.php" class="btn btn-outline-primary mb-2 d-block">Iniciar Sesión</a>
+        <a href="register.php" class="btn btn-outline-secondary d-block">Registrarse</a>
+      </div>
+    <?php endif; ?>
   </div>
