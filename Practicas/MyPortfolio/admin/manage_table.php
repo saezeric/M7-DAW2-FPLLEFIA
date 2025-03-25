@@ -187,13 +187,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (in_array($fileExtension, $allowedExtensions)) {
                     // Definir carpeta destino según la tabla
                     switch ($table) {
-                        case 'USERS': $uploadDir = '../uploads/avatars/'; break;
-                        case 'PROJECTS': $uploadDir = '../uploads/projects/'; break;
-                        case 'NEWS': $uploadDir = '../uploads/news/'; break;
-                        case 'EXPERIENCE': $uploadDir = '../uploads/experience/'; break;
-                        case 'QUALIFICATIONS': $uploadDir = '../uploads/qualifications/'; break;
-                        case 'COMMENTS': $uploadDir = '../uploads/comments/'; break;
-                        default: $uploadDir = '../uploads/'; break;
+                        case 'USERS': $uploadDir = './uploads/avatars/'; break;
+                        case 'PROJECTS': $uploadDir = './uploads/projects/'; break;
+                        case 'NEWS': $uploadDir = './uploads/news/'; break;
+                        case 'EXPERIENCE': $uploadDir = './uploads/experience/'; break;
+                        case 'QUALIFICATIONS': $uploadDir = './uploads/qualifications/'; break;
+                        case 'COMMENTS': $uploadDir = './uploads/comments/'; break;
+                        default: $uploadDir = './uploads/'; break;
                     }
                     if (!is_dir($uploadDir)) {
                         mkdir($uploadDir, 0777, true);
