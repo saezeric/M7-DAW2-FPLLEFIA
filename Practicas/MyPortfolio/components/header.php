@@ -22,7 +22,7 @@ require_once 'config.php'; // Incluimos el archivo de configuración
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     rel="stylesheet" />
 
-  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="stylesheet" href="./styles/style.css" />
 </head>
 
 <body>
@@ -39,7 +39,7 @@ require_once 'config.php'; // Incluimos el archivo de configuración
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
           <?php if (isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'admin'): ?>
-            <li><a class="dropdown-item" href="../admin/admin.php">Panel Admin</a></li>
+            <li><a class="dropdown-item" href="./admin/admin.php">Panel Admin</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
