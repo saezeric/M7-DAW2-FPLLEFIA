@@ -1,5 +1,8 @@
 <?php
 include './components/header.php';
+// Consulta a la tabla PROJECTS (ajusta los nombres de columnas si difieren)
+$query = "SELECT id, project_title, short_description, image FROM PROJECTS ORDER BY id DESC";
+$result = $mysqli->query($query);
 ?>
 
 <!-- Main Content -->
@@ -15,106 +18,40 @@ include './components/header.php';
   <!-- Lista de Proyectos -->
   <section class="container mt-5">
     <div class="card-container">
-      <!-- Proyecto 1 -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">
-            Prototipo de tienda online con WordPress
-          </h5>
-          <p class="card-text">
-            Desarrollo de una tienda online integrada con Amazon Affiliates.
-          </p>
-          <a href="proyecto.php" class="btn btn-primary">Ver Detalles</a>
+      <?php if ($result && $result->num_rows > 0): ?>
+        <?php while($row = $result->fetch_assoc()): ?>
+          <?php
+            // Ajusta el nombre de la columna de imagen si difiere
+            $img = !empty($row['image']) ? $row['image'] : 'https://via.placeholder.com/300x200'; 
+            $title = $row['project_title'];
+            $desc = $row['short_description'];
+            $projId = $row['id']; 
+          ?>
+          <div class="card">
+            <img
+              src="<?= htmlspecialchars($img); ?>"
+              class="card-img-top"
+              alt="<?= htmlspecialchars($title); ?>"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><?= htmlspecialchars($title); ?></h5>
+              <p class="card-text">
+                <?= htmlspecialchars($desc); ?>
+              </p>
+              <!-- Al hacer clic, enviamos el ID del proyecto a proyecto.php -->
+              <a href="proyecto.php?id=<?= $projId; ?>" class="btn btn-primary">Ver más</a>
+            </div>
+          </div>
+        <?php endwhile; ?>
+      <?php else: ?>
+        <!-- Si no hay registros en la base de datos -->
+        <div class="alert alert-info">
+          No hay proyectos disponibles en este momento.
         </div>
-      </div>
-      <!-- Proyecto 2 -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Automatización con IA</h5>
-          <p class="card-text">
-            Creación de asistentes virtuales automatizados.
-          </p>
-          <a href="proyecto.php" class="btn btn-primary">Ver Detalles</a>
-        </div>
-      </div>
-      <!-- Proyecto 3 -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Desarrollo de videojuegos con Unity</h5>
-          <p class="card-text">
-            Creación de videojuegos y experiencias interactivas.
-          </p>
-          <a href="proyecto.php" class="btn btn-primary">Ver Detalles</a>
-        </div>
-      </div>
-      <!-- Proyecto 4 -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Participación en hackathones</h5>
-          <p class="card-text">
-            Competencias de programación y desarrollo de soluciones
-            innovadoras.
-          </p>
-          <a href="proyecto.php" class="btn btn-primary">Ver Detalles</a>
-        </div>
-      </div>
-      <!-- Proyecto 5 -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Aplicación móvil de salud</h5>
-          <p class="card-text">
-            Desarrollo de una aplicación móvil para seguimiento de salud.
-          </p>
-          <a href="proyecto.php" class="btn btn-primary">Ver Detalles</a>
-        </div>
-      </div>
-      <!-- Proyecto 6 -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Sistema de gestión de inventarios</h5>
-          <p class="card-text">
-            Implementación de un sistema de gestión de inventarios para
-            pequeñas empresas.
-          </p>
-          <a href="proyecto.php" class="btn btn-primary">Ver Detalles</a>
-        </div>
-      </div>
-      <!-- Proyecto 7 -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Plataforma de e-learning</h5>
-          <p class="card-text">
-            Desarrollo de una plataforma de aprendizaje en línea.
-          </p>
-          <a href="proyecto.php" class="btn btn-primary">Ver Detalles</a>
-        </div>
-      </div>
-      <!-- Proyecto 8 -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Aplicación de finanzas personales</h5>
-          <p class="card-text">
-            Creación de una aplicación para la gestión de finanzas
-            personales.
-          </p>
-          <a href="proyecto.php" class="btn btn-primary">Ver Detalles</a>
-        </div>
-      </div>
-      <!-- Proyecto 9 -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">
-            Desarrollo de chatbot para atención al cliente
-          </h5>
-          <p class="card-text">
-            Implementación de un chatbot para mejorar la atención al cliente
-            en sitios web.
-          </p>
-          <a href="proyecto.php" class="btn btn-primary">Ver Detalles</a>
-        </div>
-      </div>
+      <?php endif; ?>
     </div>
   </section>
+</div>
 
   <?php
   include './components/footer.php';

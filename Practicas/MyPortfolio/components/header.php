@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'config.php'; // Incluimos el archivo de configuración
 ?>
 <!DOCTYPE html>
 <html lang="es">

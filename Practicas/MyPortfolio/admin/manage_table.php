@@ -94,16 +94,22 @@ $required_fields = [];
 $form_fields = [];
 switch ($table) {
     case 'USERS':
-        $required_fields = ['first_name', 'last_name', 'email', 'role'];
+        // Asegúrate de incluir 'password' en required_fields
+        $required_fields = ['first_name', 'last_name', 'email', 'role', 'password'];
+    
         $form_fields = [
             'first_name' => ['type' => 'text', 'label' => 'Nombre'],
             'last_name'  => ['type' => 'text', 'label' => 'Apellido'],
             'email'      => ['type' => 'email', 'label' => 'Correo Electrónico'],
-            'password'   => ['type' => 'password', 'label' => 'Contraseña (déjala en blanco para no cambiar)'],
-            'role'       => ['type' => 'select', 'label' => 'Rol', 'options' => ['admin' => 'Administrador', 'user' => 'Usuario']],
+            'password'   => ['type' => 'password', 'label' => 'Contraseña'],
+            'role'       => [
+                'type' => 'select',
+                'label' => 'Rol',
+                'options' => ['admin' => 'Administrador', 'user' => 'Usuario']
+            ],
             'avatar'     => ['type' => 'file', 'label' => 'Avatar']
         ];
-        break;
+        break;    
     case 'EXPERIENCE':
         $required_fields = ['job_title', 'company', 'start_date', 'job_responsibilities'];
         $form_fields = [
@@ -181,13 +187,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (in_array($fileExtension, $allowedExtensions)) {
                     // Definir carpeta destino según la tabla
                     switch ($table) {
-                        case 'USERS': $uploadDir = './uploads/avatars/'; break;
-                        case 'PROJECTS': $uploadDir = './uploads/projects/'; break;
-                        case 'NEWS': $uploadDir = './uploads/news/'; break;
-                        case 'EXPERIENCE': $uploadDir = './uploads/experience/'; break;
-                        case 'QUALIFICATIONS': $uploadDir = './uploads/qualifications/'; break;
-                        case 'COMMENTS': $uploadDir = './uploads/comments/'; break;
-                        default: $uploadDir = './uploads/'; break;
+                        case 'USERS': $uploadDir = '../uploads/avatars/'; break;
+                        case 'PROJECTS': $uploadDir = '../uploads/projects/'; break;
+                        case 'NEWS': $uploadDir = '../uploads/news/'; break;
+                        case 'EXPERIENCE': $uploadDir = '../uploads/experience/'; break;
+                        case 'QUALIFICATIONS': $uploadDir = '../uploads/qualifications/'; break;
+                        case 'COMMENTS': $uploadDir = '../uploads/comments/'; break;
+                        default: $uploadDir = '../uploads/'; break;
                     }
                     if (!is_dir($uploadDir)) {
                         mkdir($uploadDir, 0777, true);
@@ -704,18 +710,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
 
                         foreach ($form_fields as $field => $field_data):
-                            // En COMMENTS, omitimos el user_id ya que lo ponemos oculto
+                            // Omitir el campo user_id en COMMENTS si ya se ha agregado como oculto
                             if ($table === 'COMMENTS' && $field === 'user_id') {
                                 continue;
                             }
-
+                        
                             // Determinar si es obligatorio
                             $is_required = in_array($field, $required_fields);
-                            // Si es USERS y el campo es password en edición, no es obligatorio
                             if ($table === 'USERS' && $field === 'password' && $edit_mode) {
                                 $is_required = false;
                             }
-
+                        
                             // Obtener el valor actual (si estamos en modo edición)
                             $value = "";
                             if ($edit_mode && isset($edit_data[$field]) && !($table === 'USERS' && $field === 'password')) {
@@ -724,12 +729,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ?>
                             <div class="mb-3">
                                 <label for="<?= $field; ?>" class="form-label"><?= $field_data['label']; ?></label>
-
                                 <?php if ($field_data['type'] === 'select'): ?>
-                                    <!-- SELECT -->
-                                    <select class="form-select" id="<?= $field; ?>" name="<?= $field; ?>" <?= $is_required ? 'required' : ''; ?>
-                                        oninvalid="this.setCustomValidity('Este campo es obligatorio')"
-                                        oninput="this.setCustomValidity('')">
+                                    <select class="form-select" id="<?= $field; ?>" name="<?= $field; ?>" <?= $is_required ? 'required' : ''; ?>>
                                         <?php foreach ($field_data['options'] as $optValue => $optLabel): ?>
                                             <option value="<?= $optValue; ?>" <?= ($value === $optValue) ? 'selected' : ''; ?>>
                                                 <?= $optLabel; ?>
@@ -737,28 +738,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <?php endforeach; ?>
                                     </select>
                                 <?php elseif ($field_data['type'] === 'textarea'): ?>
-                                    <!-- TEXTAREA -->
-                                    <textarea class="form-textarea" id="<?= $field; ?>" name="<?= $field; ?>" <?= $is_required ? 'required' : ''; ?>
-                                        oninvalid="this.setCustomValidity('Este campo es obligatorio')"
-                                        oninput="this.setCustomValidity('')"><?= htmlspecialchars($value); ?></textarea>
+                                    <textarea class="form-textarea" id="<?= $field; ?>" name="<?= $field; ?>" <?= $is_required ? 'required' : ''; ?>><?= htmlspecialchars($value); ?></textarea>
                                 <?php elseif ($field_data['type'] === 'file'): ?>
-                                    <!-- FILE -->
-                                    <input type="file" class="form-control" id="<?= $field; ?>" name="<?= $field; ?>" <?= $is_required ? 'required' : ''; ?>
-                                        oninvalid="this.setCustomValidity('Por favor, sube un archivo')"
-                                        oninput="this.setCustomValidity('')">
+                                    <input type="file" class="form-control" id="<?= $field; ?>" name="<?= $field; ?>" <?= $is_required ? 'required' : ''; ?>>
                                 <?php else: ?>
-                                    <!-- INPUT normal (text, email, number, etc.) -->
                                     <input type="<?= $field_data['type']; ?>" class="form-control" id="<?= $field; ?>" name="<?= $field; ?>"
-                                        <?= ($field_data['type'] !== 'file') ? 'value="' . htmlspecialchars($value) . '"' : '' ?>
-                                        <?= $is_required ? 'required' : ''; ?>
-                                        <?= isset($field_data['step']) ? "step='{$field_data['step']}'" : ""; ?>
-                                        oninvalid="this.setCustomValidity('Este campo es obligatorio')"
-                                        oninput="this.setCustomValidity('')">
+                                           <?= ($field_data['type'] !== 'file') ? 'value="' . htmlspecialchars($value) . '"' : '' ?>
+                                           <?= $is_required ? 'required' : ''; ?>
+                                           <?= isset($field_data['step']) ? "step='{$field_data['step']}'" : ""; ?>>
                                 <?php endif; ?>
-                                <!-- Elemento para mostrar mensaje de error -->
+                                <!-- Elemento para mensaje de error -->
                                 <div class="invalid-feedback"></div>
                             </div>
-                        <?php endforeach; ?>
+                        <?php endforeach; ?>                        
 
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-<?= $edit_mode ? 'save' : 'plus'; ?> me-2"></i>
