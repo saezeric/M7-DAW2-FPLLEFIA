@@ -1,5 +1,8 @@
 <?php
 include './components/header.php';
+// Consulta dinámica a la tabla QUALIFICATIONS
+$qualQuery = "SELECT * FROM QUALIFICATIONS ORDER BY start_date DESC";
+$qualResult = $mysqli->query($qualQuery);
 ?>
 
 <!-- Main Content -->
@@ -20,161 +23,59 @@ include './components/header.php';
     </div>
   </section>
 
-  <!-- Sección de Formación -->
+  <!-- Sección de Formación Profesional -->
   <section class="section">
-    <div class="container">
-      <h2>Formación Profesional</h2>
-      <div class="card-container">
-        <!-- Card 1 -->
-        <div
-          class="card"
-          data-bs-toggle="modal"
-          data-bs-target="#modalFormacion1">
+  <div class="container">
+    <h2>Formación Profesional</h2>
+    <div class="card-container">
+      <?php if ($qualResult && $qualResult->num_rows > 0): ?>
+        <?php while($qual = $qualResult->fetch_assoc()): 
+          $start = (!empty($qual['start_date']) && $qual['start_date'] !== '0000-00-00') ? date("F Y", strtotime($qual['start_date'])) : "Fecha desconocida";
+          $end = (empty($qual['end_date']) || $qual['end_date'] === '0000-00-00') ? "En proceso" : date("F Y", strtotime($qual['end_date']));
+          $modalId = "modalQual" . $qual['id'];
+        ?>
+        <div class="card" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>">
           <div class="card-body">
-            <h5 class="card-title">Grado Superior en DAW</h5>
-            <p class="card-text">
-              Actualmente cursando el segundo año de Desarrollo de
-              Aplicaciones Web.
-            </p>
+            <h5 class="card-title"><?= htmlspecialchars($qual['degree_title']) ?></h5>
+            <p class="card-text"><?= htmlspecialchars($qual['institution']) ?></p>
+            <p class="card-text text-muted"><?= $start ?> &mdash; <?= $end ?></p>
+            <p class="card-text text-muted">Haz clic para ver más</p>
           </div>
         </div>
-        <!-- Card 2 -->
-        <div
-          class="card"
-          data-bs-toggle="modal"
-          data-bs-target="#modalFormacion2">
-          <div class="card-body">
-            <h5 class="card-title">Curso de Inteligencia Artificial</h5>
-            <p class="card-text">
-              Exploré conceptos como machine learning y procesamiento de
-              datos.
-            </p>
+        <div class="modal fade" id="<?= $modalId ?>" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content" style="background-color: #1a0b2e;">
+              <div class="modal-header">
+                <h5 class="modal-title text-white"><?= htmlspecialchars($qual['degree_title']) ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body text-white">
+                <p><strong>Institución:</strong> <?= htmlspecialchars($qual['institution']) ?></p>
+                <p><strong>Período:</strong> <?= $start ?> &mdash; <?= $end ?></p>
+                <p><?= nl2br(htmlspecialchars($qual['description'])) ?></p>
+                <?php if (!empty($qual['learned_contents'])): ?>
+                  <hr class="border-secondary">
+                  <h6>Contenidos aprendidos:</h6>
+                  <ul>
+                    <?php foreach (explode("\n", $qual['learned_contents']) as $item): ?>
+                      <li><?= htmlspecialchars(trim($item)) ?></li>
+                    <?php endforeach; ?>
+                  </ul>
+                <?php endif; ?>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
           </div>
         </div>
-        <!-- Card 3 -->
-        <div
-          class="card"
-          data-bs-toggle="modal"
-          data-bs-target="#modalFormacion3">
-          <div class="card-body">
-            <h5 class="card-title">Habilidades Técnicas</h5>
-            <p class="card-text">
-              HTML, CSS, JavaScript, PHP, Python, React, Angular, Laravel,
-              MySQL, MongoDB, Git, GitHub.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Modales para Formación -->
-  <!-- Modal 1: Grado Superior en DAW -->
-  <div class="modal fade" id="modalFormacion1" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" style="color: #000">
-            Grado Superior en DAW
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body" style="color: #000">
-          <p>
-            Información detallada sobre el Grado Superior en Desarrollo de
-            Aplicaciones Web.
-          </p>
-          <ul>
-            <li>Desarrollo Frontend y Backend</li>
-            <li>Gestión de Bases de Datos</li>
-            <li>Desarrollo de Aplicaciones Móviles</li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal">
-            Cerrar
-          </button>
-        </div>
-      </div>
+        <?php endwhile; ?>
+      <?php else: ?>
+        <div class="alert alert-info text-center">No hay formación académica disponible.</div>
+      <?php endif; ?>
     </div>
   </div>
-
-  <!-- Modal 2: Curso de Inteligencia Artificial -->
-  <div class="modal fade" id="modalFormacion2" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" style="color: #000">
-            Curso de Inteligencia Artificial
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body" style="color: #000">
-          <p>
-            Información detallada sobre el Curso de Inteligencia Artificial.
-          </p>
-          <ul>
-            <li>Introducción a la IA</li>
-            <li>Redes Neuronales</li>
-            <li>Aprendizaje Automático</li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal">
-            Cerrar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 3: Habilidades Técnicas -->
-  <div class="modal fade" id="modalFormacion3" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" style="color: #000">
-            Habilidades Técnicas
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body" style="color: #000">
-          <p>
-            Información detallada sobre las habilidades técnicas adquiridas.
-          </p>
-          <ul>
-            <li>HTML, CSS, JavaScript, PHP, Python</li>
-            <li>React, Angular, Laravel</li>
-            <li>MySQL, MongoDB</li>
-            <li>Git, GitHub</li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal">
-            Cerrar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+</section>
 
   <!-- Sección de Intereses y Enfoque Personal -->
   <section class="section">

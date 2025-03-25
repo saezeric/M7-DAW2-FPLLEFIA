@@ -1,5 +1,30 @@
 <?php
 include './components/header.php';
+
+// Obtener la experiencia más reciente
+$expResult = $mysqli->query("SELECT * FROM EXPERIENCE ORDER BY start_date DESC LIMIT 1");
+$experience = $expResult->fetch_assoc();
+
+// Obtener la titulación más reciente
+$qualResult = $mysqli->query("SELECT * FROM QUALIFICATIONS ORDER BY start_date DESC LIMIT 1");
+$qualification = $qualResult->fetch_assoc();
+
+// Consulta a la tabla PROJECTS (ajusta los nombres de columnas si difieren)
+$query = "SELECT id, project_title, short_description, image FROM PROJECTS ORDER BY id DESC";
+$result = $mysqli->query($query);
+
+// Consulta a la tabla QUALIFICATIONS para obtener todas las titulaciones
+$qualsQuery = "SELECT * FROM QUALIFICATIONS ORDER BY start_date DESC";
+$qualsResult = $mysqli->query($qualsQuery);
+
+// Traer las 3 últimas entradas ordenadas por fecha de publicación
+$blogQuery = "
+    SELECT id, title, short_description, image 
+    FROM NEWS 
+    ORDER BY publication_date DESC 
+    LIMIT 3
+";
+$blogResult = $mysqli->query($blogQuery);
 ?>
 
 <!-- Main Content -->
@@ -39,304 +64,222 @@ include './components/header.php';
     <div class="container">
       <h2>Información Relevante</h2>
       <div class="informacion-relevante-container">
-        <!-- Card 1 -->
-        <div
-          class="card"
-          data-bs-toggle="modal"
-          data-bs-target="#modalExperiencia1">
-          <div class="card-body">
-            <h5 class="card-title">Desarrollador Web en Empresa X</h5>
-            <p class="card-text">2020 a 2023</p>
-            <p class="card-text">
-              Desarrollo y mantenimiento de aplicaciones web y móviles.
-            </p>
+        <?php if ($experience): ?>
+          <div class="card" data-bs-toggle="modal" data-bs-target="#modalExperiencia<?= $experience['id'] ?>">
+            <div class="card-body">
+              <h5 class="card-title"><?= htmlspecialchars($experience['job_title']) ?></h5>
+              <p class="card-text text-white">
+                <?= date("Y", strtotime($experience['start_date'])) ?> –
+                <?= (empty($experience['end_date']) || $experience['end_date']==='0000-00-00') ? 'Actualmente' : date("Y", strtotime($experience['end_date'])) ?>
+              </p>
+              <p class="card-text text-white">Haz clic para ver más</p>
+            </div>
           </div>
-        </div>
-        <!-- Card 2 -->
-        <div
-          class="card"
-          data-bs-toggle="modal"
-          data-bs-target="#modalEducacion1">
-          <div class="card-body">
-            <h5 class="card-title">
-              Grado Superior en Desarrollo de Aplicaciones Web
-            </h5>
-            <p class="card-text">2018 a 2020</p>
-            <p class="card-text">
-              Formación especializada en desarrollo frontend y backend.
-            </p>
+        <?php endif; ?>
+
+        <?php if ($qualification): ?>
+          <div class="card" data-bs-toggle="modal" data-bs-target="#modalEducacion<?= $qualification['id'] ?>">
+            <div class="card-body">
+              <h5 class="card-title"><?= htmlspecialchars($qualification['degree_title']) ?></h5>
+              <p class="card-text text-white">
+                <?= date("Y", strtotime($qualification['start_date'])) ?> –
+                <?= (empty($qualification['end_date']) || $qualification['end_date']==='0000-00-00') ? 'En proceso' : date("Y", strtotime($qualification['end_date'])) ?>
+              </p>
+              <p class="card-text text-white">Haz clic para ver más</p>
+            </div>
           </div>
-        </div>
+        <?php endif; ?>
       </div>
     </div>
   </section>
 
-  <!-- Modales para Información Relevante -->
-  <!-- Modal 1: Experiencia -->
-  <div class="modal fade" id="modalExperiencia1" tabindex="-1">
+  <!-- Modal Experiencia -->
+  <?php if ($experience): ?>
+  <div class="modal fade" id="modalExperiencia<?= $experience['id'] ?>" tabindex="-1">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content bg-dark text-white">
         <div class="modal-header">
-          <h5 class="modal-title" style="color: #000">
-            Desarrollador Web en Empresa X
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"></button>
+          <h5 class="modal-title"><?= htmlspecialchars($experience['job_title']) ?></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="color: #000">
-          <p>
-            Información detallada sobre la experiencia como Desarrollador
-            Web en Empresa X.
-          </p>
+        <div class="modal-body">
+          <p><strong>Empresa:</strong> <?= htmlspecialchars($experience['company']) ?></p>
+          <p><strong>Periodo:</strong> <?= date("F Y", strtotime($experience['start_date'])) ?> – <?= (empty($experience['end_date']) || $experience['end_date']==='0000-00-00') ? 'Actualmente' : date("F Y", strtotime($experience['end_date'])) ?></p>
           <ul>
-            <li>Desarrollo de aplicaciones web y móviles.</li>
-            <li>Colaboración en proyectos de equipo.</li>
-            <li>Optimización de rendimiento y seguridad.</li>
+            <?php foreach (explode("\n", $experience['job_responsibilities']) as $item): ?>
+              <li><?= htmlspecialchars(trim($item)) ?></li>
+            <?php endforeach; ?>
           </ul>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal">
-            Cerrar
-          </button>
+          <button class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
   </div>
+  <?php endif; ?>
 
-  <!-- Modal 2: Educación -->
-  <div class="modal fade" id="modalEducacion1" tabindex="-1">
+  <!-- Modal Educación -->
+  <?php if ($qualification): ?>
+  <div class="modal fade" id="modalEducacion<?= $qualification['id'] ?>" tabindex="-1">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content bg-dark text-white">
         <div class="modal-header">
-          <h5 class="modal-title" style="color: #000">
-            Grado Superior en Desarrollo de Aplicaciones Web
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"></button>
+          <h5 class="modal-title"><?= htmlspecialchars($qualification['degree_title']) ?></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="color: #000">
-          <p>
-            Información detallada sobre el Grado Superior en Desarrollo de
-            Aplicaciones Web.
-          </p>
+        <div class="modal-body">
+          <p><strong>Institución:</strong> <?= htmlspecialchars($qualification['institution']) ?></p>
+          <p><strong>Periodo:</strong> <?= date("F Y", strtotime($qualification['start_date'])) ?> – <?= (empty($qualification['end_date']) || $qualification['end_date']==='0000-00-00') ? 'En proceso' : date("F Y", strtotime($qualification['end_date'])) ?></p>
           <ul>
-            <li>Desarrollo Frontend y Backend.</li>
-            <li>Gestión de Bases de Datos.</li>
-            <li>Desarrollo de Aplicaciones Móviles.</li>
+            <?php foreach (explode("\n", $qualification['description']) as $item): ?>
+              <li><?= htmlspecialchars(trim($item)) ?></li>
+            <?php endforeach; ?>
           </ul>
+          <?php if (!empty($qualification['learned_contents'])): ?>
+            <hr class="border-secondary">
+            <h6>Contenidos aprendidos:</h6>
+            <ul>
+              <?php foreach (explode("\n", $qualification['learned_contents']) as $item): ?>
+                <li><?= htmlspecialchars(trim($item)) ?></li>
+              <?php endforeach; ?>
+            </ul>
+          <?php endif; ?>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal">
-            Cerrar
-          </button>
+          <button class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
   </div>
+  <?php endif; ?>
 
-  <!-- Sección de proyectos destacados -->
-  <section class="section">
-    <div class="container">
-      <h2 class="text-center mb-4">Proyectos Destacados</h2>
-      <div class="card-container">
-        <div class="card">
-          <img
-            src="https://via.placeholder.com/300x200"
-            class="card-img-top"
-            alt="Proyecto 1" />
-          <div class="card-body">
-            <h5 class="card-title">Proyecto 1</h5>
-            <p class="card-text">Descripción breve del proyecto.</p>
-            <a href="proyecto.php" class="btn btn-primary">Ver detalles</a>
+  <!-- Lista de Proyectos -->
+  <section class="container mt-5">
+    <div class="card-container">
+      <?php if ($result && $result->num_rows > 0): ?>
+        <?php while($row = $result->fetch_assoc()): ?>
+          <?php
+            // Ajusta el nombre de la columna de imagen si difiere
+            $img = !empty($row['image']) ? $row['image'] : 'https://via.placeholder.com/300x200'; 
+            $title = $row['project_title'];
+            $desc = $row['short_description'];
+            $projId = $row['id']; 
+          ?>
+          <div class="card">
+            <img
+              src="<?= $img; ?>"
+              class="card-img-top"
+              alt="<?= $title; ?>"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><?= $title; ?></h5>
+              <p class="card-text">
+                <?= $desc; ?>
+              </p>
+              <!-- Al hacer clic, enviamos el ID del proyecto a proyecto.php -->
+              <a href="proyecto.php?id=<?= $projId; ?>" class="btn btn-primary">Ver más</a>
+            </div>
           </div>
+        <?php endwhile; ?>
+      <?php else: ?>
+        <!-- Si no hay registros en la base de datos -->
+        <div class="alert alert-info">
+          No hay proyectos disponibles en este momento.
         </div>
-        <div class="card">
-          <img
-            src="https://via.placeholder.com/300x200"
-            class="card-img-top"
-            alt="Proyecto 2" />
-          <div class="card-body">
-            <h5 class="card-title">Proyecto 2</h5>
-            <p class="card-text">Descripción breve del proyecto.</p>
-            <a href="proyecto.php" class="btn btn-primary">Ver detalles</a>
-          </div>
-        </div>
-        <div class="card">
-          <img
-            src="https://via.placeholder.com/300x200"
-            class="card-img-top"
-            alt="Proyecto 3" />
-          <div class="card-body">
-            <h5 class="card-title">Proyecto 3</h5>
-            <p class="card-text">Descripción breve del proyecto.</p>
-            <a href="proyecto.php" class="btn btn-primary">Ver detalles</a>
-          </div>
-        </div>
-      </div>
+      <?php endif; ?>
     </div>
   </section>
 
-  <!-- Sección de titulaciones oficiales -->
+  <!-- Sección de Titulaciones Oficiales -->
   <section class="section skills-section">
-    <div class="container">
-      <h2 class="text-center mb-4">Titulaciones Oficiales</h2>
-      <div class="titulaciones-container">
-        <div
-          class="card"
-          data-bs-toggle="modal"
-          data-bs-target="#modalTitulo1">
+  <div class="container">
+    <h2 class="text-center mb-4">Titulaciones Oficiales</h2>
+    <div class="titulaciones-container">
+      <?php if ($qualsResult && $qualsResult->num_rows > 0): ?>
+        <?php while($qual = $qualsResult->fetch_assoc()):
+          // Formatear fechas
+          $start = (!empty($qual['start_date']) && $qual['start_date'] !== '0000-00-00')
+                   ? date("F Y", strtotime($qual['start_date'])) : "Fecha desconocida";
+          $end = (empty($qual['end_date']) || $qual['end_date'] === '0000-00-00')
+                 ? "En proceso" : date("F Y", strtotime($qual['end_date']));
+          $modalId = "modalTitulo" . $qual['id'];
+        ?>
+        <div class="card" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>">
           <div class="card-body">
-            <h5 class="card-title">
-              Grado Superior en Desarrollo y Aplicaciones Web
-            </h5>
+            <h5 class="card-title"><?= htmlspecialchars($qual['degree_title']) ?></h5>
+            <p class="card-text"><?= htmlspecialchars($qual['institution']) ?></p>
+            <p class="card-text"><?= $start ?> — <?= $end ?></p>
             <p class="card-text">Haz clic para ver más detalles.</p>
           </div>
         </div>
-        <div
-          class="card"
-          data-bs-toggle="modal"
-          data-bs-target="#modalTitulo2">
-          <div class="card-body">
-            <h5 class="card-title">Curso de Inteligencia Artificial</h5>
-            <p class="card-text">Haz clic para ver más detalles.</p>
+
+        <!-- Modal -->
+        <div class="modal fade" id="<?= $modalId ?>" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content" style="background-color:#1a0b2e; color:#fff;">
+              <div class="modal-header">
+                <h5 class="modal-title"><?= htmlspecialchars($qual['degree_title']) ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <p><?= nl2br(htmlspecialchars($qual['description'])) ?></p>
+                <?php if (!empty($qual['learned_contents'])): ?>
+                  <hr class="border-secondary">
+                  <h6>Contenidos aprendidos:</h6>
+                  <ul>
+                    <?php foreach (explode("\n", $qual['learned_contents']) as $item): ?>
+                      <li><?= htmlspecialchars(trim($item)) ?></li>
+                    <?php endforeach; ?>
+                  </ul>
+                <?php endif; ?>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Modales para titulaciones -->
-  <!-- Modal 1 -->
-  <div class="modal fade" id="modalTitulo1" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" style="color: #000">
-            Grado Superior en Desarrollo y Aplicaciones Web
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body" style="color: #000">
-          <p>
-            Información detallada sobre el Grado Superior en Desarrollo y
-            Aplicaciones Web.
-          </p>
-          <ul>
-            <li>Desarrollo Frontend y Backend</li>
-            <li>Gestión de Bases de Datos</li>
-            <li>Desarrollo de Aplicaciones Móviles</li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal">
-            Cerrar
-          </button>
-        </div>
-      </div>
+        <?php endwhile; ?>
+      <?php else: ?>
+        <div class="alert alert-info text-center">No hay titulaciones oficiales disponibles.</div>
+      <?php endif; ?>
     </div>
   </div>
+</section>
 
-  <!-- Modal 2 -->
-  <div class="modal fade" id="modalTitulo2" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" style="color: #000">
-            Curso de Inteligencia Artificial
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body" style="color: #000">
-          <p>
-            Información detallada sobre el Curso de Inteligencia Artificial.
-          </p>
-          <ul>
-            <li>Introducción a la IA</li>
-            <li>Redes Neuronales</li>
-            <li>Aprendizaje Automático</li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal">
-            Cerrar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Sección de últimas entradas del blog -->
   <section class="blog">
     <div class="container">
       <h2 class="text-center mb-4">Últimas Entradas del Blog</h2>
       <div class="card-container">
-        <!-- Card 1 -->
-        <div class="card">
-          <img
-            src="https://via.placeholder.com/300x200"
-            class="card-img-top"
-            alt="Blog 1" />
-          <div class="card-body">
-            <h5 class="card-title">Entrada 1</h5>
-            <p class="card-text">
-              Descripción breve de la entrada del blog.
-            </p>
-            <a href="noticia.php" class="btn btn-primary">Leer más</a>
-          </div>
-        </div>
-        <!-- Card 2 -->
-        <div class="card">
-          <img
-            src="https://via.placeholder.com/300x200"
-            class="card-img-top"
-            alt="Blog 2" />
-          <div class="card-body">
-            <h5 class="card-title">Entrada 2</h5>
-            <p class="card-text">
-              Descripción breve de la entrada del blog.
-            </p>
-            <a href="noticia.php" class="btn btn-primary">Leer más</a>
-          </div>
-        </div>
-        <!-- Card 3 -->
-        <div class="card">
-          <img
-            src="https://via.placeholder.com/300x200"
-            class="card-img-top"
-            alt="Blog 3" />
-          <div class="card-body">
-            <h5 class="card-title">Entrada 3</h5>
-            <p class="card-text">
-              Descripción breve de la entrada del blog.
-            </p>
-            <a href="noticia.php" class="btn btn-primary">Leer más</a>
-          </div>
-        </div>
+        <?php if ($blogResult && $blogResult->num_rows > 0): ?>
+          <?php while ($post = $blogResult->fetch_assoc()): ?>
+            <?php
+              $img = !empty($post['image']) ? $post['image'] : 'https://via.placeholder.com/300x200';
+            ?>
+            <div class="card">
+              <img
+                src="<?= htmlspecialchars($img); ?>"
+                class="card-img-top"
+                alt="<?= htmlspecialchars($post['title']); ?>"
+                style="width:100%; height:200px; object-fit:cover;"
+              />
+              <div class="card-body">
+                <h5 class="card-title"><?= htmlspecialchars($post['title']); ?></h5>
+                <p class="card-text"><?= htmlspecialchars($post['short_description']); ?></p>
+                <a href="noticia.php?id=<?= (int)$post['id']; ?>" class="btn btn-primary">Leer más</a>
+              </div>
+            </div>
+          <?php endwhile; ?>
+        <?php else: ?>
+          <div class="alert alert-info text-center">No hay entradas disponibles.</div>
+        <?php endif; ?>
       </div>
     </div>
   </section>
+
 
   <?php
   include './components/footer.php';

@@ -29,14 +29,14 @@ $result = $mysqli->query($query);
           ?>
           <div class="card">
             <img
-              src="<?= htmlspecialchars($img); ?>"
+              src="<?= $img; ?>"
               class="card-img-top"
-              alt="<?= htmlspecialchars($title); ?>"
+              alt="<?= $title; ?>"
             />
             <div class="card-body">
-              <h5 class="card-title"><?= htmlspecialchars($title); ?></h5>
+              <h5 class="card-title"><?= $title; ?></h5>
               <p class="card-text">
-                <?= htmlspecialchars($desc); ?>
+                <?= $desc; ?>
               </p>
               <!-- Al hacer clic, enviamos el ID del proyecto a proyecto.php -->
               <a href="proyecto.php?id=<?= $projId; ?>" class="btn btn-primary">Ver más</a>

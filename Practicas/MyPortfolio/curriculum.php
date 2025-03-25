@@ -16,8 +16,8 @@ $exp_result = $mysqli->query($exp_query);
  * y que tiene columnas como:
  * id, degree_title, institution, start_date, end_date, description
  ============================= */
-$qual_query = "SELECT * FROM QUALIFICATIONS ORDER BY start_date DESC";
-$qual_result = $mysqli->query($qual_query);
+ $qualQuery = "SELECT * FROM QUALIFICATIONS ORDER BY start_date DESC";
+ $qualResult = $mysqli->query($qualQuery);
 
 /* =============================
  * 3) PROYECTOS DESTACADOS
@@ -158,63 +158,59 @@ $proj_result = $mysqli->query($proj_query);
     </div>
   </section>
 
-  <!-- Formación Académica (Dinámica con modales) -->
-  <section class="container mt-5">
-    <h2>Formación Académica</h2>
+  <!-- Sección de Formación Profesional -->
+  <section class="section">
+  <div class="container">
+    <h2>Formación Profesional</h2>
     <div class="card-container">
-      <?php if ($qual_result && $qual_result->num_rows > 0): ?>
-        <?php while($qual = $qual_result->fetch_assoc()): ?>
-          <?php
-            $start = $qual['start_date'];
-            $startFmt = (!empty($start) && $start != '0000-00-00') ? date("F Y", strtotime($start)) : "Sin fecha de inicio";
-            $end = $qual['end_date'];
-            $endFmt = (empty($end) || $end == '0000-00-00') ? "En proceso" : date("F Y", strtotime($end));
-            $modalId = "modalForm" . $qual['id'];
-          ?>
-          <div class="card" data-bs-toggle="modal" data-bs-target="#<?= $modalId; ?>">
-            <div class="card-body">
-              <h5 class="card-title"><?= htmlspecialchars($qual['degree_title']); ?></h5>
-              <p class="card-text">
-                <?= htmlspecialchars($qual['institution']); ?><br>
-                <small class="text-muted"><?= htmlspecialchars($startFmt); ?> - <?= htmlspecialchars($endFmt); ?></small>
-              </p>
-              <p class="card-text text-muted">Haz clic para ver más</p>
-            </div>
+      <?php if ($qualResult && $qualResult->num_rows > 0): ?>
+        <?php while($qual = $qualResult->fetch_assoc()): 
+          $start = (!empty($qual['start_date']) && $qual['start_date'] !== '0000-00-00') ? date("F Y", strtotime($qual['start_date'])) : "Fecha desconocida";
+          $end = (empty($qual['end_date']) || $qual['end_date'] === '0000-00-00') ? "En proceso" : date("F Y", strtotime($qual['end_date']));
+          $modalId = "modalQual" . $qual['id'];
+        ?>
+        <div class="card" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>">
+          <div class="card-body">
+            <h5 class="card-title"><?= htmlspecialchars($qual['degree_title']) ?></h5>
+            <p class="card-text"><?= htmlspecialchars($qual['institution']) ?></p>
+            <p class="card-text text-muted"><?= $start ?> &mdash; <?= $end ?></p>
+            <p class="card-text text-muted">Haz clic para ver más</p>
           </div>
-
-          <!-- Modal de esta formación -->
-          <div class="modal fade" id="<?= $modalId; ?>" tabindex="-1">
-            <div class="modal-dialog">
-              <div class="modal-content" style="background-color: #1a0b2e;">
-                <div class="modal-header">
-                  <h5 class="modal-title" style="color: #fff;">
-                    <?= htmlspecialchars($qual['degree_title']); ?>
-                  </h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="color: #fff;">
-                  <p>
-                    <strong>Institución:</strong> <?= htmlspecialchars($qual['institution']); ?><br>
-                    <strong>Período:</strong> <?= htmlspecialchars($startFmt); ?> - <?= htmlspecialchars($endFmt); ?>
-                  </p>
-                  <p>
-                    <?= nl2br(htmlspecialchars($qual['description'])); ?>
-                  </p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                    Cerrar
-                  </button>
-                </div>
+        </div>
+        <div class="modal fade" id="<?= $modalId ?>" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content" style="background-color: #1a0b2e;">
+              <div class="modal-header">
+                <h5 class="modal-title text-white"><?= htmlspecialchars($qual['degree_title']) ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body text-white">
+                <p><strong>Institución:</strong> <?= htmlspecialchars($qual['institution']) ?></p>
+                <p><strong>Período:</strong> <?= $start ?> &mdash; <?= $end ?></p>
+                <p><?= nl2br(htmlspecialchars($qual['description'])) ?></p>
+                <?php if (!empty($qual['learned_contents'])): ?>
+                  <hr class="border-secondary">
+                  <h6>Contenidos aprendidos:</h6>
+                  <ul>
+                    <?php foreach (explode("\n", $qual['learned_contents']) as $item): ?>
+                      <li><?= htmlspecialchars(trim($item)) ?></li>
+                    <?php endforeach; ?>
+                  </ul>
+                <?php endif; ?>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>
+        </div>
         <?php endwhile; ?>
       <?php else: ?>
-        <p>No hay formación académica disponible.</p>
+        <div class="alert alert-info text-center">No hay formación académica disponible.</div>
       <?php endif; ?>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- Habilidades Técnicas (Sección estática) -->
   <section class="container mt-5">
