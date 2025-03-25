@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-12">
             <h3>Derechos Reservados</h3>
-            <p>&copy; 2023 Eric Sáez. Todos los derechos reservados.</p>
+            <p>&copy; 2025 Eric Sáez Escalona. Todos los derechos reservados.</p>
         </div>
         </div>
     </section>
