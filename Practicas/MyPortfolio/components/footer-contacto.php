@@ -3,26 +3,30 @@
     <!-- Información Personal -->
     <section class="container mt-5">
         <div class="row">
-            <div class="col-md-12">
-                <h3>Información Personal</h3>
-                <div class="d-flex justify-content-between my-4">
-                    <p>Email: [tu email]</p>
-                    <p>Teléfono: [opcional]</p>
-                    <p>
-                        LinkedIn:
-                        <a href="[enlace a tu perfil]">[enlace a tu perfil]</a>
-                    </p>
-                    <p>
-                        GitHub:
-                        <a href="[enlace a tu perfil]">[enlace a tu perfil]</a>
-                    </p>
-                    <p>Ubicación: [ciudad, país]</p>
-                </div>
+        <div class="col-md-12">
+            <h3>Información Personal</h3>
+            <div class="d-flex justify-content-between my-4">
+            <p>Email: <a href="mailto:ericsaez13@gmail.com" class="text-decoration-none">ericsaez13@gmail.com</a></p>
+            <p>Teléfono: <a href="tel:+34633191460" class="text-decoration-none">+34 633 19 14 60</a></p>
+            <p>
+                LinkedIn:
+                <a href="https://www.linkedin.com/in/eric-saez-escalona-877049258/" target="_blank" class="text-decoration-none">
+                Eric Sáez
+                </a>
+            </p>
+            <p>
+                GitHub:
+                <a href="https://github.com/saezeric" target="_blank" class="text-decoration-none">
+                saezeric
+                </a>
+            </p>
+            <p>Ubicación: Badalona, Barcelona</p>
             </div>
-            <div class="col-md-12">
-                <h3>Derechos Reservados</h3>
-                <p>&copy; 2023 Eric Sáez. Todos los derechos reservados.</p>
-            </div>
+        </div>
+        <div class="col-md-12">
+            <h3>Derechos Reservados</h3>
+            <p>&copy; 2023 Eric Sáez. Todos los derechos reservados.</p>
+        </div>
         </div>
     </section>
 </footer>

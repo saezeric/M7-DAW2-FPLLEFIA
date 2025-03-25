@@ -16,11 +16,11 @@ include './components/header.php';
     <div class="contact-info">
       <div>
         <i class="fas fa-phone"></i>
-        <p>+34 123 456 789</p>
+        <p>+34 633 19 14 60</p>
       </div>
       <div>
         <i class="fas fa-envelope"></i>
-        <p>contacto@ericsaez.com</p>
+        <p>ericsaez13@gmail.com</p>
       </div>
       <div>
         <i class="fas fa-map-marker-alt"></i>
