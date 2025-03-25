@@ -41,8 +41,9 @@ $blogResult = $mysqli->query($blogQuery);
         <a href="quien-soy.php" class="btn btn-primary">Conóceme más</a>
       </div>
       <img
-        src="https://img.freepik.com/foto-gratis/apuesto-hombre-apuntando-lateral_1368-5182.jpg?t=st=1742176104~exp=1742179704~hmac=3bb3f8b3ef80be9a821d21ea05f770616729e269fb019462cfc883c052f60f51&w=740"
-        alt="Tu Nombre" />
+        src="./uploads/avatars/0b3b831b16a1ddfc398dbc9155c07e99.jpg"
+        alt="Tu Nombre"
+        style="width: 500px; height: 500px; object-fit: cover; border-radius: 50%;" />
     </div>
   </section>
 

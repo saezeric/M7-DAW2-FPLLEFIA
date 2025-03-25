@@ -32,10 +32,10 @@ require_once 'config.php'; // Incluimos el archivo de configuración
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <?php if (isset($_SESSION['user_id'])): ?>
-      <!-- Si el usuario está logueado, se muestra su avatar en la parte superior izquierda con dropdown -->
+      <!-- Solo muestra el avatar y dropdown si el usuario está logueado -->
       <div class="dropdown text-center">
         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="<?= $_SESSION['user_avatar'] ?>" alt="Avatar" style="width: 150px; height: 150px; object-fit: cover;" class="rounded-circle">
+          <img src="<?= htmlspecialchars($_SESSION['user_avatar']) ?>" alt="Avatar" style="width: 150px; height: 150px; object-fit: cover;" class="rounded-circle">
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
           <?php if (isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'admin'): ?>
@@ -47,9 +47,6 @@ require_once 'config.php'; // Incluimos el archivo de configuración
           <li><a class="dropdown-item" href="logout.php">Cerrar Sesión</a></li>
         </ul>
       </div>
-    <?php else: ?>
-      <!-- Si no hay sesión, se muestra la imagen por defecto -->
-      <img src="https://via.placeholder.com/150" alt="" />
     <?php endif; ?>
 
     <nav>

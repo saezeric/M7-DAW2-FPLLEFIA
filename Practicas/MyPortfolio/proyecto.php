@@ -1,120 +1,94 @@
 <?php
-include './components/header.php';
+include("./components/header.php");
+
+// Verificar si se ha pasado el parámetro 'id' en la URL
+if (isset($_GET['id'])) {
+    $project_id = (int)$_GET['id'];
+
+    // Consulta SQL para obtener los datos del proyecto basado en el ID
+    $sql = "SELECT * FROM PROJECTS WHERE id = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("i", $project_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        $project = $result->fetch_assoc();
+    } else {
+        // Si no se encuentra el proyecto, mostrar error
+        die("<div class='container'><p class='error-message'>Proyecto no encontrado.</p></div>");
+    }
+} else {
+    // Si no se proporciona el ID, mostrar error
+    die("<div class='container'><p class='error-message'>ID del proyecto no proporcionado.</p></div>");
+}
 ?>
 
-<!-- Main Content -->
-<div class="main-content">
-  <!-- Encabezado del Proyecto -->
-  <section class="container mt-5">
-    <h1 class="text-center mb-4">Nombre del Proyecto</h1>
-    <p class="text-center">
-      Una breve descripción del proyecto y su propósito.
-    </p>
-  </section>
-
-  <!-- Sección de Descripción General -->
-  <section class="container mt-5">
-    <h2>Descripción General</h2>
-    <p>
-      Aquí puedes describir en qué consiste el proyecto, sus objetivos y su
-      relevancia.
-    </p>
-  </section>
-
-  <!-- Sección de Tecnologías Utilizadas -->
-  <section class="container mt-5">
-    <h2>Tecnologías Utilizadas</h2>
-    <div class="card-container">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Tecnología 1</h5>
-          <p class="card-text">Descripción breve de la tecnología.</p>
+<!-- Hero Section -->
+<section class="hero-section" style="background-image: url('<?= $project['image']; ?>');">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="hero-title"><?= htmlspecialchars($project['project_title']); ?></h1>
+                <p class="hero-subtitle"><?= htmlspecialchars($project['short_description']); ?></p>
+            </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Tecnología 2</h5>
-          <p class="card-text">Descripción breve de la tecnología.</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Tecnología 3</h5>
-          <p class="card-text">Descripción breve de la tecnología.</p>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <!-- Sección de Conocimientos Aprendidos -->
-  <section class="container mt-5">
-    <h2>Conocimientos Aprendidos</h2>
-    <p>
-      Describe los conocimientos que adquiriste durante el desarrollo del
-      proyecto.
-    </p>
-  </section>
-
-  <!-- Sección de Funcionalidades -->
-  <section class="container mt-5">
-    <h2>Funcionalidades</h2>
-    <div class="card-container">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Funcionalidad 1</h5>
-          <p class="card-text">Descripción breve de la funcionalidad.</p>
+<!-- Project Details -->
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="project-content">
+                    <h2 class="detail-title"><?= htmlspecialchars($project['detail_title1']); ?></h2>
+                    <p><?= nl2br(htmlspecialchars($project['detail_description1'])); ?></p>
+                    
+                    <h2 class="detail-title"><?= htmlspecialchars($project['detail_title2']); ?></h2>
+                    <p><?= nl2br(htmlspecialchars($project['detail_description2'])); ?></p>
+                </div>
+                
+                <!-- Demo Section -->
+                <div class="demo-section mt-5">
+                    <h2 class="section-title">Demo del Proyecto</h2>
+                    <iframe 
+                        src="<?= htmlspecialchars($project['deployment_link']); ?>" 
+                        width="100%" 
+                        height="1000px" 
+                        style="border: none; border-radius: 10px; background: #fff;"
+                        title="Demo de <?= htmlspecialchars($project['project_title']); ?>"></iframe>
+                </div>
+                
+                <!-- Links Section -->
+                <div class="links-section mt-5 text-center">
+                    <a href="<?= htmlspecialchars($project['repository']); ?>" class="btn btn-primary mr-3" target="_blank">
+                        Ver Repositorio en GitHub
+                    </a>
+                    <a href="<?= htmlspecialchars($project['deployment_link']); ?>" class="btn btn-outline-primary" target="_blank">
+                        Ver Proyecto en Vivo
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Funcionalidad 2</h5>
-          <p class="card-text">Descripción breve de la funcionalidad.</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Funcionalidad 3</h5>
-          <p class="card-text">Descripción breve de la funcionalidad.</p>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <!-- Sección de Guía de Estilos -->
-  <section class="container mt-5">
-    <h2>Guía de Estilos</h2>
-    <p>
-      Explica las decisiones de diseño, colores, tipografías y estilos
-      utilizados en el proyecto.
-    </p>
-  </section>
+<!-- Call to Action -->
+<section class="section cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2>¿Interesado en más proyectos?</h2>
+                <p class="mb-4">Explora otros proyectos en mi portafolio o contáctame para colaborar.</p>
+                <a href="proyectos.php" class="btn btn-primary mr-3">Ver Portafolio</a>
+                <a href="contacto.php" class="btn btn-outline-primary">Contactar</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-  <!-- Sección de Explicación del Funcionamiento -->
-  <section class="container mt-5">
-    <h2>Explicación del Funcionamiento</h2>
-    <p>
-      Describe cómo funciona el proyecto desde un punto de vista técnico.
-    </p>
-  </section>
-
-  <!-- Sección de Demo Integrada -->
-  <section class="container mt-5">
-    <h2>Demo del Proyecto</h2>
-    <iframe
-      src="https://proyecto-tetrissaez-eric.vercel.app"
-      width="100%"
-      height="1000px"
-      style="border: none; border-radius: 10px"></iframe>
-  </section>
-
-  <!-- Enlace al Repositorio -->
-  <section class="container mt-5 text-center">
-    <a
-      href="https://github.com/saezeric/proyectoTetris_SaezEric"
-      class="btn btn-primary"
-      target="_blank">Ver Repositorio en GitHub</a>
-  </section>
-
-  <?php
-  include './components/footer.php';
-  ?>
+<?php
+include("./components/footer.php");
+?>
